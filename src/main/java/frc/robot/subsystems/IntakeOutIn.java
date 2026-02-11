@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkFlex;
@@ -26,9 +27,9 @@ public class IntakeOutIn extends SubsystemBase {
   public IntakeOutIn() {
 
 
- IntakePositionMotor = new SparkMax(Constants.MotorIDs.IntakePositionMotorID, MotorType.kBrushless);
- InsideLimitSwitch = new DigitalInput(Constants.DigitalIO.IntakeInsideLimitSwitchID);
- OutsideLimitSwitch = new DigitalInput(Constants.DigitalIO.IntakeOutsideLimitSwitchID);
+ IntakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
+ InsideLimitSwitch = new DigitalInput(Constants.MotorIDs.INTAKE_INSIDE_LIMIT_SWITCH_ID);
+ OutsideLimitSwitch = new DigitalInput(Constants.MotorIDs.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
 
 
 
