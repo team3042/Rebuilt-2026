@@ -15,6 +15,6 @@ public class Constants {
 
         public static final int INTAKE_INSIDE_LIMIT_SWITCH_ID = 0;
         public static final int INTAKE_OUTSIDE_LIMIT_SWITCH_ID = 1;
-
+        
     }
 }
