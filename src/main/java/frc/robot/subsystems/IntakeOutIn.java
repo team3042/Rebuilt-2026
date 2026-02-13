@@ -28,8 +28,8 @@ public class IntakeOutIn extends SubsystemBase {
 
 
  IntakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
- InsideLimitSwitch = new DigitalInput(Constants.MotorIDs.INTAKE_INSIDE_LIMIT_SWITCH_ID);
- OutsideLimitSwitch = new DigitalInput(Constants.MotorIDs.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
+ InsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
+ OutsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
 
 
 
