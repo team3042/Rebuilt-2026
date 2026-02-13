@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import frc.robot.Constants;
 
 import com.revrobotics.spark.SparkMax;
 
@@ -17,8 +18,10 @@ public class Feeder extends SubsystemBase {
 
   public Feeder() {
 
-    spindexerMotor = new SparkMax(Constants.MotorIDs.spindexerMotorID, MotorType.kBrushless);
-    launcherFeederMotor = new SparkMax(Constants.MotorIDs.launcherFeederMotorID, MotorType.kBrushless);
+    spindexerMotor = new SparkMax(Constants.MotorIDs.SPIDEXER_MOTOR_ID, MotorType.kBrushless);
+    launcherFeederMotor = new SparkMax(Constants.MotorIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
+
+
   }
 
   @Override
