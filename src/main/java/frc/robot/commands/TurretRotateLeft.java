@@ -5,12 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Turret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class TurretRotateLeft extends Command {
+
+  double speed;
+
+  private final Turret turret;
   /** Creates a new TurretRotateLeft. */
-  public TurretRotateLeft() {
+  public TurretRotateLeft(Turret turret) {
+    this.turret = turret;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(turret);
   }
 
   // Called when the command is initially scheduled.
