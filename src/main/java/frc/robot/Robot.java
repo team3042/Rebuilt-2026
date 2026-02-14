@@ -6,14 +6,24 @@ package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
 
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.IntakeOutIn;
+import frc.robot.subsystems.vision.PhotonVisionCamera;
 
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private final RobotContainer m_robotContainer;
+
+    /*Creating subsystem instances */
+    public static final IntakeOutIn intakeOutIn = new IntakeOutIn();
+    public static final PhotonVisionCamera photonVisionCamera;
+    
+    //If the robot is running in the real world.
+    public static final boolean isReal = isReal();
 
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
