@@ -15,24 +15,20 @@ import com.revrobotics.spark.SparkClosedLoopController;
 
 import frc.robot.Constants;
 
-
 public class IntakeOutIn extends SubsystemBase {
 
 
   public final DigitalInput OutsideLimitSwitch;
   public final DigitalInput InsideLimitSwitch;
 
- private final SparkMax IntakePositionMotor;
+  private final SparkMax IntakePositionMotor;
 
     /** Creates a new IntakeOutIn. */
   public IntakeOutIn() {
 
-
- IntakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
- InsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
- OutsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
-
-
+    IntakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
+    InsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
+    OutsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
 
   }
 
@@ -51,7 +47,7 @@ public void PowerToIntakeOut(double percentPower){
 
 public void PowerToIntakeIn(double percentPower){
   
- if (InsideLimitSwitch.get() || (!OutsideLimitSwitch.get() && percentPower >= 0)) {
+ if (InsideLimitSwitch.get() || (!InsideLimitSwitch.get() && percentPower >= 0)) {
             IntakePositionMotor.set(percentPower);
         } 
         
