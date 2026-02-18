@@ -18,7 +18,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
          flywheelMotor.set(0);
       } 
 
-
+      public double getVelocity() {
+         return flywheelMotor.getEncoder().getVelocity();
+      }
    }
 
 

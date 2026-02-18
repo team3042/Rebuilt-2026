@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.Feeder;
 import com.ctre.phoenix6.HootAutoReplay;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -13,6 +14,8 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private final RobotContainer m_robotContainer;
+
+    public static Feeder feeder = new Feeder();
 //
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
