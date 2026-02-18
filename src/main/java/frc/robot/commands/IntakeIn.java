@@ -11,7 +11,7 @@ import frc.robot.subsystems.IntakeOutIn;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeIn extends Command {
 
-  IntakeOutIn intakein = new IntakeOutIn();
+  IntakeOutIn intakeIn = new IntakeOutIn();
   /** Creates a new IntakeIn. */
   public IntakeIn() {
 
@@ -26,7 +26,7 @@ public class IntakeIn extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        intakein.PowerToIntakeIn(.5);
+        intakeIn.PowerToIntakeIn(.5);
 
   }
 
