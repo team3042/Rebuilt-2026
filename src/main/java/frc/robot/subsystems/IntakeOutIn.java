@@ -14,6 +14,8 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
 
+import frc.robot.Constants;
+
 
 public class IntakeOutIn extends SubsystemBase {
 
