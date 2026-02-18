@@ -26,7 +26,7 @@ public class IntakeIn extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        intakeIn.PowerToIntakeIn(.5);
+        intakeIn.powerToIntakeIn(.5);
 
   }
 

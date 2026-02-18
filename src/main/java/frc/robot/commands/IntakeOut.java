@@ -24,7 +24,7 @@ public class IntakeOut extends Command {
   @Override
   public void execute() {
 
-        intakeOut.PowerToIntakeOut(-.5);
+        intakeOut.powerToIntakeOut(-.5);
   }
 
   // Called once the command ends or is interrupted.

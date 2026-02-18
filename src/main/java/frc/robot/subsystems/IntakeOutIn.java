@@ -20,52 +20,52 @@ import frc.robot.Constants;
 public class IntakeOutIn extends SubsystemBase {
 
 
-  public final DigitalInput OutsideLimitSwitch;
-  public final DigitalInput InsideLimitSwitch;
+  public final DigitalInput outsideLimitSwitch;
+  public final DigitalInput insideLimitSwitch;
 
- private final SparkMax IntakePositionMotor;
+ private final SparkMax intakePositionMotor;
 
     /** Creates a new IntakeOutIn. */
   public IntakeOutIn() {
 
 
- IntakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
- InsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
- OutsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
+ intakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
+ insideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
+ outsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
 
 
 
   }
 
-public void PowerToIntakeOut(double percentPower){
+public void powerToIntakeOut(double percentPower){
   
- if (OutsideLimitSwitch.get() || (!InsideLimitSwitch.get() && percentPower >= 0)) {
-            IntakePositionMotor.set(percentPower);
+ if (outsideLimitSwitch.get() || (!insideLimitSwitch.get() && percentPower >= 0)) {
+            intakePositionMotor.set(percentPower);
         } 
         
         else 
         {
-            IntakePositionMotor.set(0);
+            intakePositionMotor.set(0);
         }
 
 }
 
-public void PowerToIntakeIn(double percentPower){
+public void powerToIntakeIn(double percentPower){
   
- if (InsideLimitSwitch.get() || (!OutsideLimitSwitch.get() && percentPower <= 0)) {
-            IntakePositionMotor.set(percentPower);
+ if (insideLimitSwitch.get() || (!outsideLimitSwitch.get() && percentPower <= 0)) {
+            intakePositionMotor.set(percentPower);
         } 
         
         else 
         {
-            IntakePositionMotor.set(0);
+            intakePositionMotor.set(0);
         }
 
 }
 
  public double getIntakeMotorPosition() {
 
-    return IntakePositionMotor.getEncoder().getPosition();
+    return intakePositionMotor.getEncoder().getPosition();
   }
 
 
