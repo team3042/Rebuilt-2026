@@ -13,7 +13,7 @@ import frc.robot.Constants;
       flywheelMotor = new SparkMax(Constants.MotorIDs.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
       flywheelEncoder = flywheelMotor.getEncoder();
    }
-      public static void shoot(double power){
+      public void shoot(double power){
          flywheelMotor.set(power);
       }
 
@@ -21,7 +21,7 @@ import frc.robot.Constants;
          flywheelMotor.set(0);
       } 
       public double getSpeed(){
-         return flywheelEncoder.getVelocity();
+         return flywheelEncoder.getVelocity(); 
       }
 
 
