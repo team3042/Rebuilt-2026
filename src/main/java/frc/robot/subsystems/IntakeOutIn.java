@@ -15,8 +15,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 public class IntakeOutIn extends SubsystemBase {
 
 
-  public final DigitalInput OutsideLimitSwitch;
-  public final DigitalInput InsideLimitSwitch;
+  public final DigitalInput outsideLimitSwitch;
+  public final DigitalInput insideLimitSwitch;
 
   private final SparkMax intakePositionMotor;
   private final SparkMax IntakeRunMotor;
