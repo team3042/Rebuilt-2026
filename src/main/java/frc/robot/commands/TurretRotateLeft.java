@@ -5,19 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.Turret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class TurretRotateLeft extends Command {
 
-  double speed;
+  double power;
 
-  private final Turret turret;
+  private Turret turret;
+
   /** Creates a new TurretRotateLeft. */
-  public TurretRotateLeft(Turret turret) {
-    this.turret = turret;
+  public TurretRotateLeft(double pow) { 
+    power = pow;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(turret);
+    addRequirements(Robot.turret);
+    turret = Robot.turret;
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +29,10 @@ public class TurretRotateLeft extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    turret.PowerToTurret(-power);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
