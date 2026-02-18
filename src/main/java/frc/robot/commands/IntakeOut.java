@@ -10,7 +10,7 @@ import frc.robot.subsystems.IntakeOutIn;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeOut extends Command {
 
-  IntakeOutIn intakeout = new IntakeOutIn();
+  IntakeOutIn intakeOut = new IntakeOutIn();
   /** Creates a new IntakeOut. */
   public IntakeOut() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,7 +24,7 @@ public class IntakeOut extends Command {
   @Override
   public void execute() {
 
-        intakeout.PowerToIntakeOut(-.5);
+        intakeOut.PowerToIntakeOut(-.5);
   }
 
   // Called once the command ends or is interrupted.
