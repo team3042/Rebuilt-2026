@@ -28,8 +28,8 @@ public class IntakeOutIn extends SubsystemBase {
 
 
  IntakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
- InsideLimitSwitch = new DigitalInput(Constants.MotorIDs.INTAKE_INSIDE_LIMIT_SWITCH_ID);
- OutsideLimitSwitch = new DigitalInput(Constants.MotorIDs.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
+ InsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
+ OutsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
 
 
 
@@ -37,7 +37,7 @@ public class IntakeOutIn extends SubsystemBase {
 
 public void PowerToIntakeOut(double percentPower){
   
- if (OutsideLimitSwitch.get() || (!OutsideLimitSwitch.get() && percentPower >= 0)) {
+ if (OutsideLimitSwitch.get() || (!InsideLimitSwitch.get() && percentPower >= 0)) {
             IntakePositionMotor.set(percentPower);
         } 
         
@@ -50,7 +50,7 @@ public void PowerToIntakeOut(double percentPower){
 
 public void PowerToIntakeIn(double percentPower){
   
- if (InsideLimitSwitch.get() || (!OutsideLimitSwitch.get() && percentPower >= 0)) {
+ if (InsideLimitSwitch.get() || (!OutsideLimitSwitch.get() && percentPower <= 0)) {
             IntakePositionMotor.set(percentPower);
         } 
         
