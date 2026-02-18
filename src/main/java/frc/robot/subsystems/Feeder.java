@@ -14,50 +14,17 @@ public class Feeder extends SubsystemBase {
   /** Creates a new Feeder. */
 
   private final SparkMax spindexerMotor;
-  private final SparkMax feederMotor;
+  private final SparkMax launcherFeederMotor;
 
   public Feeder() {
 
     spindexerMotor = new SparkMax(Constants.MotorIDs.SPIDEXER_MOTOR_ID, MotorType.kBrushless);
-    feederMotor = new SparkMax(Constants.MotorIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
+    launcherFeederMotor = new SparkMax(Constants.MotorIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
 
-  }
-
-  public void setPowerToSpindexer(double power) {
-
-    power = powerAcceptable(power);
-    spindexerMotor.set(power);
-  
-  }
-
-  public void setPowerToFeeder(double power) {
-
-    power = powerAcceptable(power);
-    feederMotor.set(power);
-  }
-
-  public double getSpindexerMotorPosition() {
-
-    return spindexerMotor.getEncoder().getPosition();
-
-  }
-
-  public double getFeederMotorPosition() {
-
-    return feederMotor.getEncoder().getPosition();
-    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-
-  public double powerAcceptable(double power) {
-
-    power = Math.max(power, -1);
-    power = Math.min(power, 1);
-
-    return power;
   }
 }
