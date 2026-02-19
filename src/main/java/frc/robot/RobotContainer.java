@@ -77,8 +77,8 @@ public class RobotContainer {
         driver.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         //gunner controls
-        gunner.x().whileTrue(new TurretRotateLeft(Constants.PowerConstants.TURRET_MOTOR_POWER));
-        gunner.a().whileTrue(new TurretRotateRight(Constants.PowerConstants.TURRET_MOTOR_POWER));
+        gunner.x().whileTrue(new TurretRotateLeft(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
+        gunner.a().whileTrue(new TurretRotateRight(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

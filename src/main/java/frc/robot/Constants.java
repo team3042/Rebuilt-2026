@@ -19,4 +19,10 @@ public class Constants {
         public static final int TURRET_ONE_EIGHTY_LIMIT_SWITCH_ID = 3;
 
     }
+
+    public static class PowerConstants {
+
+        public static final double TURRET_MOTOR_POWER_LEFT = -0.5;
+        public static final double TURRET_MOTOR_POWER_RIGHT = 0.5;
+    }
 }

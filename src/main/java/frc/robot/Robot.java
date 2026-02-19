@@ -17,6 +17,7 @@ public class Robot extends TimedRobot {
     private final RobotContainer m_robotContainer;
 
     public static Turret turret = new Turret();
+    
 
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
