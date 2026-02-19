@@ -25,6 +25,7 @@ public class Constants {
         public static final int TURRET_END_LIMIT_SWITCH_ID = 3;
         
     }
+<<<<<<< HEAD
 
     public static class PowerConstants {
         
@@ -41,3 +42,11 @@ public class Constants {
         public static final double FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER = -0.5;
     }
 }
+=======
+    
+    public static class PowerConstants {
+        
+        public static final double FLYWHEEL_POWER = 0.5;
+    }
+}
+>>>>>>> ab7cc10 (Finished Flywheel commands)

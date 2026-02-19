@@ -11,11 +11,14 @@ import frc.robot.subsystems.Flywheel;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class RunFlywheel extends Command {
   /** Creates a new RunFlywheel. */
-  double speed;
-  public RunFlywheel(double power) {
+  double power;
+  Flywheel flywheel = Robot.flywheel;
+
+
+  public RunFlywheel(double pow) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.Flywheel);
-    speed = power;
+    addRequirements(flywheel);
+    power = pow;
   }
 
   // Called when the command is initially scheduled.
@@ -25,12 +28,14 @@ public class RunFlywheel extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.Flywheel.shoot(speed);
+    flywheel.powerToFlywheel(power);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    flywheel.stopFlywheel();
+  }
 
   // Returns true when the command should end.
   @Override
