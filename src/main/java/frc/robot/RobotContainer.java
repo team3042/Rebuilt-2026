@@ -15,7 +15,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
+import frc.robot.commands.TurretRotateLeft;
+import frc.robot.commands.TurretRotateRight;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -76,7 +77,8 @@ public class RobotContainer {
         driver.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         //gunner controls
-        
+        gunner.x().whileTrue(new TurretRotateLeft(Constants.PowerConstants.TURRET_MOTOR_POWER));
+        gunner.a().whileTrue(new TurretRotateRight(Constants.PowerConstants.TURRET_MOTOR_POWER));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
