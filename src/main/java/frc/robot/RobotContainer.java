@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
+import frc.robot.commands.RunFlywheel;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -77,7 +77,8 @@ public class RobotContainer {
 
         //gunner controls
         
-
+        gunner.rightBumper().whileTrue(new RunFlywheel(Constants.PowerConstants.FLYWHEEL_POWER));
+        
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 

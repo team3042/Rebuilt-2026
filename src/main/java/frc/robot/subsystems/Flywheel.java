@@ -2,9 +2,12 @@
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
- public class Flywheel {
+ public class Flywheel extends SubsystemBase {
 
    private static SparkMax flywheelMotor;
    private static RelativeEncoder flywheelEncoder;
@@ -13,14 +16,14 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
       flywheelMotor = new SparkMax(18, MotorType.kBrushless);
       flywheelEncoder = flywheelMotor.getEncoder();
    }
-      public void shoot(double power){
+      public void powerToFlywheel(double power){
          flywheelMotor.set(power);
       }
 
-      public void stopShoot(){
+      public void stopFlywheel(){
          flywheelMotor.set(0);
       } 
-      public double getSpeed(){
+      public double getVeloity(){
          return flywheelEncoder.getVelocity(); 
       }
 

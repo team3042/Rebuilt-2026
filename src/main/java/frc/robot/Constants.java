@@ -17,4 +17,9 @@ public class Constants {
         public static final int INTAKE_OUTSIDE_LIMIT_SWITCH_ID = 1;
 
     }
+    
+    public static class PowerConstants {
+        
+        public static final double FLYWHEEL_POWER = 0.5;
+    }
 }
