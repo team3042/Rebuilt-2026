@@ -27,18 +27,18 @@ public class IntakeOutIn extends SubsystemBase {
     intakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
     IntakeRunMotor = new SparkMax(Constants.MotorIDs.INTAKE_RUN_MOTOR_ID, MotorType.kBrushless);
 
-    InsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
-    OutsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
+    insideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
+    outsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
 
   }
 
   //method that gets Intake into position
-  public void PowerToIntakeOut(double percentPower){
+  public void powerToIntakeOut(double percentPower){
     
       percentPower = Math.min(percentPower, 1);
       percentPower = Math.max(percentPower, -1);
 
-      if (!OutsideLimitSwitch.get() || (!InsideLimitSwitch.get() && percentPower >= 0)) {
+      if (!outsideLimitSwitch.get() || (!insideLimitSwitch.get() && percentPower >= 0)) {
           intakePositionMotor.set(percentPower);
       } else {
           intakePositionMotor.set(0);
@@ -47,19 +47,19 @@ public class IntakeOutIn extends SubsystemBase {
   }
 
   //method that gets Intake back in the robot
-  public void PowerToIntakeIn(double percentPower){
+  public void powerToIntakeIn(double percentPower){
     
       percentPower = Math.min(percentPower, 1);
       percentPower = Math.max(percentPower, -1);
 
-      if (InsideLimitSwitch.get() || (!OutsideLimitSwitch.get() && percentPower >= 0)) {
+      if (insideLimitSwitch.get() || (!outsideLimitSwitch.get() && percentPower >= 0)) {
           intakePositionMotor.set(percentPower);
       } else {
           intakePositionMotor.set(0);
       }
   }
 
-  public void PowerToIntakeRun(double percentPower) {
+  public void powerToIntakeRun(double percentPower) {
 
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
