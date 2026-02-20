@@ -34,7 +34,7 @@ public class Turret extends SubsystemBase {
     TurretMotor.set(0);
   }
 
-  public double getTurretPosition(){
+  public double getEncoderCounts(){
     return TurretMotor.getEncoder().getPosition();
   }
 
