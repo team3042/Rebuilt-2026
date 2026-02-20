@@ -2,7 +2,7 @@ package frc.robot;
 
 public class Constants {
 
-    // put all motor IDs in this class
+   // put all motor IDs in this class
     public static class MotorIDs {
 
         public static final int INTAKE_RUN_MOTOR_ID = 1;
