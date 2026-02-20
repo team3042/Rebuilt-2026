@@ -2,7 +2,7 @@ package frc.robot;
 
 public class Constants {
 
-    // put all motor IDs in this class
+   // put all motor IDs in this class
     public static class MotorIDs {
 
         public static final int INTAKE_RUN_MOTOR_ID = 1;
@@ -25,7 +25,7 @@ public class Constants {
         public static final int TURRET_END_LIMIT_SWITCH_ID = 3;
         
     }
-
+    
     public static class PowerConstants {
         
         public static final double INTAKE_RUN_POWER = 0.5;
