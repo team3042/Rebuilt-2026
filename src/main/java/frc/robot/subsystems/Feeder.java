@@ -23,6 +23,25 @@ public class Feeder extends SubsystemBase {
 
   }
 
+  public void powerToSpindexer(double power) {
+    power = Math.min(power, 1);
+    power = Math.max(power, -1);
+
+    spindexerMotor.set(power);
+  }
+
+  public void powerToFeeder(double power) {
+    power = Math.min(power, 1);
+    power = Math.max(power, -1);
+
+    launcherFeederMotor.set(power);
+  }
+
+  public void stopMotors() {
+    spindexerMotor.set(0);
+    launcherFeederMotor.set(0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
