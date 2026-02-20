@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.RunFlywheel;
+import frc.robot.commands.RunFeeder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -91,6 +92,10 @@ public class RobotContainer {
         
         gunner.rightBumper().whileTrue(new RunFlywheel(Constants.PowerConstants.FLYWHEEL_POWER));
         
+        gunner.rightTrigger().whileTrue(new RunFeeder(Constants.PowerConstants.FEEDER_RUN_TO_LAUNCHER_POWER));
+        gunner.b().whileTrue(new RunFeeder(Constants.PowerConstants.FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER));
+
+
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
