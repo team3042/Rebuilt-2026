@@ -20,6 +20,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.RunFlywheel;
+import frc.robot.commands.TurretRotateLeft;
+import frc.robot.commands.TurretRotateRight;
+import frc.robot.commands.IntakeIn;
+import frc.robot.commands.IntakeOut;
+import frc.robot.commands.IntakePower;
 import frc.robot.commands.RunFeeder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -95,6 +100,13 @@ public class RobotContainer {
         gunner.rightTrigger().whileTrue(new RunFeeder(Constants.PowerConstants.FEEDER_RUN_TO_LAUNCHER_POWER));
         gunner.b().whileTrue(new RunFeeder(Constants.PowerConstants.FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER));
 
+        gunner.x().whileTrue(new TurretRotateLeft(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
+        gunner.a().whileTrue(new TurretRotateRight(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
+        
+        gunner.povUp().whileTrue(new IntakeIn(-Constants.PowerConstants.INTAKE_POSITION_POWER));
+        gunner.povDown().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_POWER));
+        gunner.leftBumper().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_RUN_POWER));
+        gunner.leftTrigger().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_REVERSE_RUN_POWER));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
