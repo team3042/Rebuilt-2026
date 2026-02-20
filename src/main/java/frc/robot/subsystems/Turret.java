@@ -17,8 +17,8 @@ public class Turret extends SubsystemBase {
   public Turret() {
 
     TurretMotor = new SparkMax(Constants.MotorIDs.TURRET_MOTOR_ID, MotorType.kBrushless);
-    ZeroLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_ZERO_LIMIT_SWITCH_ID);
-    OneEightyLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_ONE_EIGHTY_LIMIT_SWITCH_ID);
+    ZeroLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_START_LIMIT_SWITCH_ID);
+    OneEightyLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_END_LIMIT_SWITCH_ID);
   }
 
   public void PowerToTurret(double percentPower){
