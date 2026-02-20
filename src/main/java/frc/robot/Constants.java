@@ -46,7 +46,17 @@ public class Constants {
     
     public static class PowerConstants {
         
+        public static final double INTAKE_RUN_POWER = 0.5;
+        public static final double INTAKE_REVERSE_RUN_POWER = -0.5;
+        public static final double INTAKE_POSITION_POWER = 0.5;
+
+        public static final double TURRET_MOTOR_POWER_LEFT = -0.5;
+        public static final double TURRET_MOTOR_POWER_RIGHT = 0.5;
+
         public static final double FLYWHEEL_POWER = 0.5;
+
+        public static final double FEEDER_RUN_TO_LAUNCHER_POWER = 0.5;
+        public static final double FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER = -0.5;
     }
 }
 >>>>>>> ab7cc10 (Finished Flywheel commands)
