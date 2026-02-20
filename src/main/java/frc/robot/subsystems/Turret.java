@@ -11,19 +11,19 @@ public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
 
   private final SparkMax TurretMotor;
-  public final DigitalInput ZeroLimitSwitch;
-  public final DigitalInput OneEightyLimitSwitch;
+  public final DigitalInput startLimitSwitch;
+  public final DigitalInput endLimitSwitch;
 
   public Turret() {
 
     TurretMotor = new SparkMax(Constants.MotorIDs.TURRET_MOTOR_ID, MotorType.kBrushless);
-    ZeroLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_START_LIMIT_SWITCH_ID);
-    OneEightyLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_END_LIMIT_SWITCH_ID);
+    startLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_START_LIMIT_SWITCH_ID);
+    endLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_END_LIMIT_SWITCH_ID);
   }
 
   public void PowerToTurret(double percentPower){
     //left is negative, right is positive
-    if ((ZeroLimitSwitch.get() || percentPower > 0) && (OneEightyLimitSwitch.get() || percentPower < 0)) {
+    if ((startLimitSwitch.get() || percentPower > 0) && (endLimitSwitch.get() || percentPower < 0)) {
       TurretMotor.set(percentPower);
     } else {
       TurretMotor.set(0);
