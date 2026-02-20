@@ -30,7 +30,7 @@ public class IntakeIn extends Command {
   @Override
   public void execute() {
 
-    intake.PowerToIntakeIn(power);
+    intake.powerToIntakeIn(power);
   }
 
   // Called once the command ends or is interrupted.

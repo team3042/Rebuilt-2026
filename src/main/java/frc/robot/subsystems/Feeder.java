@@ -18,9 +18,28 @@ public class Feeder extends SubsystemBase {
 
   public Feeder() {
 
-    spindexerMotor = new SparkMax(Constants.MotorIDs.SPIDEXER_MOTOR_ID, MotorType.kBrushless);
+    spindexerMotor = new SparkMax(Constants.MotorIDs.SPINDEXER_MOTOR_ID, MotorType.kBrushless);
     launcherFeederMotor = new SparkMax(Constants.MotorIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
 
+  }
+
+  public void powerToSpindexer(double power) {
+    power = Math.min(power, 1);
+    power = Math.max(power, -1);
+
+    spindexerMotor.set(power);
+  }
+
+  public void powerToFeeder(double power) {
+    power = Math.min(power, 1);
+    power = Math.max(power, -1);
+
+    launcherFeederMotor.set(power);
+  }
+
+  public void stopMotors() {
+    spindexerMotor.set(0);
+    launcherFeederMotor.set(0);
   }
 
   @Override
