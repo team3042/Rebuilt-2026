@@ -13,7 +13,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
    private static RelativeEncoder flywheelEncoder;
 
    public Flywheel() {
-      flywheelMotor = new SparkMax(18, MotorType.kBrushless);
+      flywheelMotor = new SparkMax(FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
       flywheelEncoder = flywheelMotor.getEncoder();
    }
       public void powerToFlywheel(double power){
