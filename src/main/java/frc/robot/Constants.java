@@ -43,11 +43,14 @@ public class Constants {
 
     public static class LauncherConstants {
 
-        //TODO: generate/find Constants
-        public static double kSVolts;
-        public static double kVVoltSecondsPerRotation;
-        public static double kP;
-        public static double kShooterToleranceRPS;
+        //TODO: find kSVolts
+        public static double kSVolts = 0;
+        public static double kVVoltSecondsPerRotation = 0.51;
+        public static double kP = 1.12;
+        public static double kShooterToleranceRPS = 0.05;
+        public static double kAVolts = 0.07;
+        public static double kI = 0;
+        public static double kD = 0;
 
 
     }

@@ -9,7 +9,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,15 +20,10 @@ public class Flywheel extends SubsystemBase {
   private final SparkMax feederMotor;
   private final SparkMax spindexerMotor;
 
-//   private final Encoder m_shooterEncoder =
-//       new Encoder(
-//           LauncherConstants.kEncoderPorts[0],
-//           LauncherConstants.kEncoderPorts[1],
-//           LauncherConstants.kEncoderReversed);
   private final SimpleMotorFeedforward m_shooterFeedforward =
       new SimpleMotorFeedforward(
-          LauncherConstants.kSVolts, LauncherConstants.kVVoltSecondsPerRotation);
-  private final PIDController m_shooterFeedback = new PIDController(LauncherConstants.kP, 0.0, 0.0);
+          LauncherConstants.kSVolts, LauncherConstants.kVVoltSecondsPerRotation, LauncherConstants.kAVolts);
+  private final PIDController m_shooterFeedback = new PIDController(LauncherConstants.kP, LauncherConstants.kI, LauncherConstants.kD);
 
   /** The shooter subsystem for the robot. */
   public Flywheel() {
@@ -39,7 +33,6 @@ public class Flywheel extends SubsystemBase {
    spindexerMotor = new SparkMax(Constants.MotorIDs.SPINDEXER_MOTOR_ID, MotorType.kBrushless);
 
     m_shooterFeedback.setTolerance(LauncherConstants.kShooterToleranceRPS);
-   //  m_shooterEncoder.setDistancePerPulse(LauncherConstants.kEncoderDistancePerPulse);
 
     // Set default command to turn off both the shooter and feeder motors, and then idle
     setDefaultCommand(
