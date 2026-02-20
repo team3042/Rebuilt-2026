@@ -8,18 +8,25 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunFeeder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class RobotContainer {
+
+    private SendableChooser<Command> autoChooser;
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -38,7 +45,13 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
     public RobotContainer() {
+
+         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+
         configureBindings();
+
     }
 
     private void configureBindings() {
@@ -76,6 +89,9 @@ public class RobotContainer {
         driver.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         //gunner controls
+        
+        gunner.rightBumper().whileTrue(new RunFlywheel(Constants.PowerConstants.FLYWHEEL_POWER));
+        
         gunner.rightTrigger().whileTrue(new RunFeeder(Constants.PowerConstants.FEEDER_RUN_TO_LAUNCHER_POWER));
         gunner.b().whileTrue(new RunFeeder(Constants.PowerConstants.FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER));
 
@@ -84,7 +100,10 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        // Simple drive forward auton
+
+            // return autoChooser.getSelected();
+
+        // Simple drive forward auton (EXAMPLE ONLY - replace with pathplanner auto)
         final var idle = new SwerveRequest.Idle();
         return Commands.sequence(
             // Reset our field centric heading to match the robot
@@ -101,4 +120,5 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle)
         );
     }
+    
 }

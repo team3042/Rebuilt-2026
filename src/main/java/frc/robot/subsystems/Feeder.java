@@ -18,7 +18,7 @@ public class Feeder extends SubsystemBase {
 
   public Feeder() {
 
-    spindexerMotor = new SparkMax(Constants.MotorIDs.SPIDEXER_MOTOR_ID, MotorType.kBrushless);
+    spindexerMotor = new SparkMax(Constants.MotorIDs.SPINDEXER_MOTOR_ID, MotorType.kBrushless);
     launcherFeederMotor = new SparkMax(Constants.MotorIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
 
   }
