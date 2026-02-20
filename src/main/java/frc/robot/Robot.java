@@ -9,24 +9,13 @@ import com.ctre.phoenix6.HootAutoReplay;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-<<<<<<< HEAD
-import frc.robot.subsystems.Turret;
-
-import frc.robot.subsystems.IntakeOutIn;
-=======
 import frc.robot.subsystems.Flywheel;
->>>>>>> ab7cc10 (Finished Flywheel commands)
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private final RobotContainer m_robotContainer;
 
-<<<<<<< HEAD
-    public static Turret turret = new Turret();
-    public static IntakeOutIn intake = new IntakeOutIn();
-=======
     public static Flywheel flywheel = new Flywheel();
->>>>>>> ab7cc10 (Finished Flywheel commands)
 //
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
