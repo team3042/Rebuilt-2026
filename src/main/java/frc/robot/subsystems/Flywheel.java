@@ -2,7 +2,7 @@
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
-
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
