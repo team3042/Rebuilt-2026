@@ -15,24 +15,24 @@ import frc.robot.Constants;
 import frc.robot.Constants.LauncherConstants;
 
 @Logged
-public class Flywheel extends SubsystemBase {
+public class Launcher extends SubsystemBase {
   private final SparkMax flywheelMotor;
   private final SparkMax feederMotor;
   private final SparkMax spindexerMotor;
 
   private final SimpleMotorFeedforward m_shooterFeedforward =
       new SimpleMotorFeedforward(
-          LauncherConstants.kSVolts, LauncherConstants.kVVoltSecondsPerRotation, LauncherConstants.kAVolts);
+          LauncherConstants.KS_VOLTS, LauncherConstants.KV_VOLTS_SECONDS_PER_ROTATION, LauncherConstants.KA_VOLTS);
   private final PIDController m_shooterFeedback = new PIDController(LauncherConstants.kP, LauncherConstants.kI, LauncherConstants.kD);
 
   /** The shooter subsystem for the robot. */
-  public Flywheel() {
+  public Launcher() {
 
    flywheelMotor = new SparkMax(Constants.MotorIDs.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
    feederMotor = new SparkMax(Constants.MotorIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
    spindexerMotor = new SparkMax(Constants.MotorIDs.SPINDEXER_MOTOR_ID, MotorType.kBrushless);
 
-    m_shooterFeedback.setTolerance(LauncherConstants.kShooterToleranceRPS);
+    m_shooterFeedback.setTolerance(LauncherConstants.KSHOOTER_TOLERALCE_RPS);
 
     // Set default command to turn off both the shooter and feeder motors, and then idle
     setDefaultCommand(
@@ -65,13 +65,23 @@ public class Flywheel extends SubsystemBase {
 
             // Wait until the shooter has reached the setpoint, and then run the feeder
             waitUntil(m_shooterFeedback::atSetpoint).andThen(() -> powerToFeederAndSpindexer()))
-        .withName("Shoot");
+            .finallyDo(interrupted -> {
+               // runs when command ends OR is interrupted
+          stopLauncherMotors();
+      })
+      .withName("Shoot");
   }
 
   private void powerToFeederAndSpindexer() {
 
       feederMotor.set(1);
       spindexerMotor.set(1);
+  }
+
+  public void stopLauncherMotors() {
+    feederMotor.set(0);
+    spindexerMotor.set(0);
+    flywheelMotor.set(0);
   }
 
 
