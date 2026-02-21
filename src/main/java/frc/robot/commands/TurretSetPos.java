@@ -14,6 +14,7 @@ public class TurretSetPos extends Command {
 
   Turret turret;
   double encoderCounts;
+
   public TurretSetPos(double encoderCounts) {
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -31,17 +32,19 @@ public class TurretSetPos extends Command {
   public void execute() {
 
     if (turret.getEncoderCounts() < encoderCounts) {
-      turret.PowerToTurret(0.5);
+      turret.powerToTurret(0.5);
     } else if (turret.getEncoderCounts() > encoderCounts) {
-      turret.PowerToTurret(-0.5);
+      turret.powerToTurret(-0.5);
     } else {
-      turret.PowerToTurret(0);
+      turret.powerToTurret(0);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    turret.powerToTurret(0);
+  }
 
   // Returns true when the command should end.
   @Override
