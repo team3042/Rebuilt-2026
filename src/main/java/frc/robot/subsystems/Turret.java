@@ -21,8 +21,8 @@ public class Turret extends SubsystemBase {
     endLimitSwitch = new DigitalInput(Constants.DigitalIO.TURRET_END_LIMIT_SWITCH_ID);
   }
 
-  public void PowerToTurret(double percentPower){
-    //left is negative, right is positive
+  public void powerToTurret(double percentPower) {
+    // left is negative, right is positive
     if ((startLimitSwitch.get() || percentPower > 0) && (endLimitSwitch.get() || percentPower < 0)) {
       TurretMotor.set(percentPower);
     } else {
@@ -30,11 +30,11 @@ public class Turret extends SubsystemBase {
     }
   }
 
-  public void stopTurret(){
+  public void stopTurret() {
     TurretMotor.set(0);
   }
 
-  public double getEncoderCounts(){
+  public double getEncoderCounts() {
     return TurretMotor.getEncoder().getPosition();
   }
 
