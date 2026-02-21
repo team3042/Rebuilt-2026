@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.commands.IntakeIn;
-import frc.robot.subsystems.Feeder;
 import com.ctre.phoenix6.HootAutoReplay;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -22,7 +20,6 @@ public class Robot extends TimedRobot {
     public static Launcher launcher = new Launcher();
     public static Turret turret = new Turret();
     public static IntakeOutIn intake = new IntakeOutIn();
-    public static Feeder feeder = new Feeder();
 //
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
