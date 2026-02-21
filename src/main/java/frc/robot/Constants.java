@@ -51,7 +51,7 @@ public class Constants {
         public static double KA_VOLTS = 0.07;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 1;
+        public static double DESIRED_RPS = 5000;
 
 
     }
