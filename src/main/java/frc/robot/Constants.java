@@ -47,7 +47,7 @@ public class Constants {
         public static double KS_VOLTS = 0;
         public static double KV_VOLTS_SECONDS_PER_ROTATION = 0.51;
         public static double kP = 1.12;
-        public static double KSHOOTER_TOLERALCE_RPS = 0.05;
+        public static double KSHOOTER_TOLERANCE_RPS = 0.05;
         public static double KA_VOLTS = 0.07;
         public static double kI = 0;
         public static double kD = 0;
