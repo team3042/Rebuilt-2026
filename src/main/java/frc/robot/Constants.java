@@ -40,4 +40,18 @@ public class Constants {
         public static final double FEEDER_RUN_TO_LAUNCHER_POWER = 0.5;
         public static final double FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER = -0.5;
     }
+
+    public static class LauncherConstants {
+
+        //TODO: find kSVolts
+        public static double kSVolts = 0;
+        public static double kVVoltSecondsPerRotation = 0.51;
+        public static double kP = 1.12;
+        public static double kShooterToleranceRPS = 0.05;
+        public static double kAVolts = 0.07;
+        public static double kI = 0;
+        public static double kD = 0;
+
+
+    }
 }
