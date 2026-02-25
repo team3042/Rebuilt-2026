@@ -4,13 +4,15 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.Feeder;
 import com.ctre.phoenix6.HootAutoReplay;
 
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.IntakeOutIn;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.vision.PhotonVisionCamera;
 
 public class Robot extends TimedRobot {
@@ -25,6 +27,11 @@ public class Robot extends TimedRobot {
     //If the robot is running in the real world.
     public static final boolean isReal = isReal();
 
+    public static Flywheel flywheel = new Flywheel();
+    public static Turret turret = new Turret();
+    public static IntakeOutIn intake = new IntakeOutIn();
+    public static Feeder feeder = new Feeder();
+//
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
         .withTimestampReplay()
