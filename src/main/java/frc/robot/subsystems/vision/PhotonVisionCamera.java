@@ -3,24 +3,17 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems.vision;
 
-import static frc.robot.Constants.VisionConstants;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.numbers.*;
-import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.DoubleArraySubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StringPublisher;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.Constants;
-import frc.robot.Constants.FIELD_CONSTANTS;
-import frc.robot.Constants.VisionConstants;
-
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -29,7 +22,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import org.photonvision.*;
 import org.photonvision.simulation.PhotonCameraSim;
-import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.targeting.PhotonPipelineResult;
 
 import com.google.gson.JsonArray;
@@ -83,7 +75,6 @@ public class PhotonVisionCamera {
   protected final PhotonPoseEstimator m_poseEstimator;
 
   protected PhotonCameraSim m_simCamera;
-  private SimCameraProperties m_simProperties;
 
   public PhotonVisionCamera(
     String cameraName,
@@ -110,32 +101,9 @@ public class PhotonVisionCamera {
     m_robotToCameraTranform = robotToCameraTransform;
     m_resultProccessor = resultConsumer;
     m_poseEstimator = new PhotonPoseEstimator(
-      FIELD_CONSTANTS.APRIL_TAG_LAYOUT,
+      Constants.FieldConstants.APRIL_TAG_LAYOUT,
       m_robotToCameraTranform
     );
-    if(!Robot.isReal){
-      m_simProperties = new SimCameraProperties();
-      m_simProperties.setAvgLatencyMs(60);
-      m_simProperties.setFPS(30);
-      m_simProperties.setExposureTimeMs(30);
-      String relativeFilePath = "/Users/advikachaudhari/Documents/PhotonVision Calibrations/photon_calibration_camera_1280x800.json";
-      var camIntrinMatrix = getCameraIntrinsicsFromJson(relativeFilePath);
-      var distCoeffMatrix = getDistCoeffsFromJson(relativeFilePath);
-      if(camIntrinMatrix != null && distCoeffMatrix != null){
-        m_simProperties.setCalibration(1280, 960, camIntrinMatrix, distCoeffMatrix);
-        System.out.println("[PhotonVisionCamera] | " + cameraName + " | Sim camera props set successfully.");
-      }
-      
-      m_simCamera = new PhotonCameraSim(m_camera, m_simProperties, FIELD_CONSTANTS.APRIL_TAG_LAYOUT);
-      m_simCamera.setMaxSightRange(6);
-      // m_simCamera.setMinTargetAreaPercent(2);
-      m_simCamera.enableProcessedStream(true);
-      m_simCamera.enableDrawWireframe(true);
-    }
-    else {
-      m_simProperties = null;
-      m_simCamera = null;
-    }
   }
 
   /**
@@ -144,9 +112,7 @@ public class PhotonVisionCamera {
   protected void updateResult() {
     if (!m_camera.isConnected() && Robot.isReal) return;
 
-    List<PhotonPipelineResult> results = Robot.isReal ? m_camera.getAllUnreadResults() : 
-      List.of(m_simCamera.process(60, new Pose3d(RobotContainer.drivetrain.getFieldRelativePose2d()).plus(m_robotToCameraTranform),Constants.VisionConstants.SIM_TARGETS));
-
+    List<PhotonPipelineResult> results = m_camera.getAllUnreadResults();
     // no new results, so we stop here.
     if (results.isEmpty()) return;
 

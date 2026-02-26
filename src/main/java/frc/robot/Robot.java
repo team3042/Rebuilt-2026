@@ -22,7 +22,9 @@ public class Robot extends TimedRobot {
 
     /*Creating subsystem instances */
     public static final IntakeOutIn intakeOutIn = new IntakeOutIn();
-    public static final PhotonVisionCamera photonVisionCamera;
+
+    // TODO: initialize photonVisionCamera
+    // public static final PhotonVisionCamera photonVisionCamera;
     
     //If the robot is running in the real world.
     public static final boolean isReal = isReal();
