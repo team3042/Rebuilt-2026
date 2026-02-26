@@ -54,8 +54,7 @@ public class CameraManager {
 
     public boolean isInField() {
       return (
-        this.estimPose != null &&
-        CollisionDetection.isPoseInField(this.estimPose)
+        this.estimPose != null
       );
     }
 
@@ -115,7 +114,7 @@ public class CameraManager {
       }
       averageDistBetweenEstimates /= estimates.length;
       if (
-        averageDistBetweenEstimates >= MAX_DIST_BETWEEN_ESTIMATES.in(Meters)
+        averageDistBetweenEstimates >= Constants.VisionConstants.MAX_DIST_BETWEEN_ESTIMATES.in(Meters)
       ) return null;
       return averageEstimate;
     }
@@ -141,7 +140,7 @@ public class CameraManager {
       return (
         this.exists() &&
         this.isInField() &&
-        (this.timestampSeconds + ESTIMATE_TIMEOUT.in(Seconds) >
+        (this.timestampSeconds + Constants.VisionConstants.ESTIMATE_TIMEOUT.in(Seconds) >
           RobotController.getMeasureFPGATime().in(Seconds))
       );
     }
@@ -190,8 +189,8 @@ public class CameraManager {
         camToTargetTransform != null &&
         targetFieldRelativePose != null &&
         timestamp > then &&
-        (!Double.isNaN(yaw) && Math.abs(yaw) > MAX_ANGLE.in(Degrees)) &&
-        (!Double.isNaN(pitch) && Math.abs(pitch) > MAX_ANGLE.in(Degrees)) &&
+        (!Double.isNaN(yaw) && Math.abs(yaw) > Constants.VisionConstants.MAX_ANGLE.in(Degrees)) &&
+        (!Double.isNaN(pitch) && Math.abs(pitch) > Constants.VisionConstants.MAX_ANGLE.in(Degrees)) &&
         !Double.isNaN(skew)
       );
     }
@@ -353,9 +352,6 @@ public class CameraManager {
 
     pnpInfo.camera().publishPose(estimate.estimatedPose.toPose2d());
 
-    // if estimate is out of the field, throw it away
-    if (!CollisionDetection.isPoseInField(estimate.estimatedPose)) return null;
-
     double averageTargetDistance = 0;
 
     for (PhotonTrackedTarget target : estimate.targetsUsed) {
@@ -366,7 +362,7 @@ public class CameraManager {
     averageTargetDistance /= estimate.targetsUsed.size();
     // the higher the confidence is, the less the estimated measurment is trusted.
     double velocityConf =
-      MAGIC_VEL_CONF_ADDEND +
+      Constants.VisionConstants.MAGIC_VEL_CONF_ADDEND +
       Math.abs(
         RobotContainer.drivetrain.getAbsoluteTranslationalVelocity().in(MetersPerSecond)
       );
@@ -374,14 +370,14 @@ public class CameraManager {
     double coordinateConfidence = Math.pow(
       estimate.targetsUsed.size() *
       ((averageTargetDistance / 2) * velocityConf),
-      MAGIC_VEL_CONF_EXPONENT
+      Constants.VisionConstants.MAGIC_VEL_CONF_EXPONENT
     );
 
     return new poseEstimate(
       estimate,
       VecBuilder.fill(
-        coordinateConfidence * X_STD_DEV_COEFFIECIENT,
-        coordinateConfidence * Y_STD_DEV_COEFFIECIENT,
+        coordinateConfidence * Constants.VisionConstants.X_STD_DEV_COEFFIECIENT,
+        coordinateConfidence * Constants.VisionConstants.Y_STD_DEV_COEFFIECIENT,
         Double.MAX_VALUE // Theta conf, should never change the gyro heading
       )
     );
@@ -431,7 +427,7 @@ public class CameraManager {
           .getTranslation()
           .getDistance(averageEstimate.estimPose.toPose2d().getTranslation())
       ) >
-      MAX_DIST_FROM_CURR_POSE.in(Meters)
+      Constants.VisionConstants.MAX_DIST_FROM_CURR_POSE.in(Meters)
     ) {
       // and is NOT disabled, throw away pose.
       if (!RobotModeTriggers.disabled().getAsBoolean()) {
@@ -487,7 +483,7 @@ public class CameraManager {
     List<PhotonTrackedTarget> targetList
   ) {
     double highestPitch =
-      targetList.get(0).getPitch() + BEST_TARGET_PITCH_TOLERANCE.in(Degrees);
+      targetList.get(0).getPitch() + Constants.VisionConstants.BEST_TARGET_PITCH_TOLERANCE.in(Degrees);
     PhotonTrackedTarget bestTarget = targetList.get(0);
     for (PhotonTrackedTarget targetSeen : targetList) {
       if (
@@ -525,12 +521,12 @@ public class CameraManager {
     // if rotating too fast, dont create info
     if (
       Math.abs(RobotContainer.drivetrain.getAngularVelocity().in(RadiansPerSecond)) >
-      MAX_ACCEPTABLE_ROTATIONAL_VELOCITY.in(RadiansPerSecond)
+      Constants.VisionConstants.MAX_ACCEPTABLE_ROTATIONAL_VELOCITY.in(RadiansPerSecond)
     ) return null;
     // if translating too fast, dont create info
     if (
       RobotContainer.drivetrain.getAbsoluteTranslationalVelocity().in(MetersPerSecond) >
-      MAX_ACCEPTABLE_TRANSLATIONAL_VELOCITY.in(MetersPerSecond)
+      Constants.VisionConstants.MAX_ACCEPTABLE_TRANSLATIONAL_VELOCITY.in(MetersPerSecond)
     ) return null;
 
     Rotation3d heading = new Rotation3d(

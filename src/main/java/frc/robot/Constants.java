@@ -4,8 +4,13 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.units.Unit;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Time;
 
 public class Constants {
 
@@ -67,6 +72,22 @@ public class Constants {
         public static final String CAMERA_NAME = "photonvision";
         public static final PoseStrategy FALLBACK_STRATEGY = PoseStrategy.LOWEST_AMBIGUITY;
         public static final PoseStrategy PRIMARY_STRATEGY = PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR;
+        //TODO: all values below this line may need to be tuned
+        public static final Angle MAX_ANGLE = Units.Degrees.of(35);
+        public static final Distance MAX_DIST_BETWEEN_ESTIMATES = Units.Meters.of(0.5);
+        public static final Time ESTIMATE_TIMEOUT = Units.Milliseconds.of(120);
+        public static final LinearVelocity MAX_ACCEPTABLE_TRANSLATIONAL_VELOCITY = Units.MetersPerSecond.of(1.5);
+        public static final AngularVelocity MAX_ACCEPTABLE_ROTATIONAL_VELOCITY = Units.RadiansPerSecond.of(1);
+        public static final Angle BEST_TARGET_PITCH_TOLERANCE = Units.Degrees.of(4);
+        public static final Distance MAX_DIST_FROM_CURR_POSE = Units.Meters.of(0.75);
+        //TODO: what are these
+        public static final double MAGIC_VEL_CONF_ADDEND = 0.6;
+        public static final double MAGIC_VEL_CONF_EXPONENT = 1.3;
+        // coeffiecients for pose trust from vision. Can be raised or lowered depending on how much we trust them.
+        public static final double X_STD_DEV_COEFFIECIENT = 0.8;
+        public static final double Y_STD_DEV_COEFFIECIENT = 0.8;
+
+
 
 
     }
