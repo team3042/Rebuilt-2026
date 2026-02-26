@@ -15,8 +15,12 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.LinearVelocity;
 import org.json.simple.parser.ParseException;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -344,5 +348,23 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @Override
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
+    }
+
+    public ChassisSpeeds getCurrentChassisSpeeds() {
+        return super.getState().Speeds;
+    }
+
+    public AngularVelocity getAngularVelocity() {
+        return Units.RadiansPerSecond.of(getState().Speeds.omegaRadiansPerSecond);
+    }
+
+    public LinearVelocity getAbsoluteTranslationalVelocity() {
+        var speeds = getCurrentChassisSpeeds();
+        var xVel = Math.abs(speeds.vxMetersPerSecond);
+        var yVel = Math.abs(speeds.vyMetersPerSecond);
+        var translationalVelocity = Math.sqrt(
+        Math.pow(xVel, 2) + Math.pow(yVel, 2)
+        ); // A^2 + B^2 = C^2
+        return Units.MetersPerSecond.of(translationalVelocity);
     }
 }

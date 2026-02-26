@@ -23,6 +23,9 @@ public class Robot extends TimedRobot {
     public static Launcher launcher = new Launcher();
     public static Turret turret = new Turret();
     public static Intake intake = new Intake();
+
+    // TODO: initialize photonVisionCamera
+    // public static final PhotonVisionCamera photonVisionCamera;
     
     //If the robot is running in the real world.
     public static final boolean isReal = isReal();
