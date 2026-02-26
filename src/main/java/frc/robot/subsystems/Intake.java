@@ -10,7 +10,7 @@ import frc.robot.Constants;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-public class IntakeOutIn extends SubsystemBase {
+public class Intake extends SubsystemBase {
   
   public final DigitalInput outsideLimitSwitch;
   public final DigitalInput insideLimitSwitch;
@@ -19,7 +19,7 @@ public class IntakeOutIn extends SubsystemBase {
   private final SparkMax IntakeRunMotor;
 
     /** Creates a new IntakeOutIn. */
-  public IntakeOutIn() {
+  public Intake() {
     intakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
     IntakeRunMotor = new SparkMax(Constants.MotorIDs.INTAKE_RUN_MOTOR_ID, MotorType.kBrushless);
     insideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);

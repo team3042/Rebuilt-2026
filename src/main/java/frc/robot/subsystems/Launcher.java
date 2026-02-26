@@ -32,7 +32,7 @@ public class Launcher extends SubsystemBase {
    feederMotor = new SparkMax(Constants.MotorIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
    spindexerMotor = new SparkMax(Constants.MotorIDs.SPINDEXER_MOTOR_ID, MotorType.kBrushless);
 
-    m_shooterFeedback.setTolerance(LauncherConstants.KSHOOTER_TOLERALCE_RPS);
+    m_shooterFeedback.setTolerance(LauncherConstants.KSHOOTER_TOLERANCE_RPS);
 
     // Set default command to turn off both the shooter and feeder motors, and then idle
     setDefaultCommand(
