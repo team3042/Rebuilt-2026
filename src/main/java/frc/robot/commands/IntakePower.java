@@ -6,13 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.IntakeOutIn;
+import frc.robot.subsystems.Intake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakePower extends Command {
   /** Creates a new IntakePower. */
 
-  private final IntakeOutIn intake;
+  private final Intake intake;
   private final double power;
   
   public IntakePower(double pow) {
