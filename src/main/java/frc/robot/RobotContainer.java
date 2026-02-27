@@ -49,11 +49,11 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+        configureBindings();
+
+        NamedCommands.registerCommand("test", Commands.print("I EXIST"));
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
-
-        configureBindings();
 
     }
 
