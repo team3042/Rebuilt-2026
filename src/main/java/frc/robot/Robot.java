@@ -20,6 +20,10 @@ public class Robot extends TimedRobot {
 
     private final RobotContainer m_robotContainer;
 
+
+    // TODO: initialize photonVisionCamera
+    // public static final PhotonVisionCamera photonVisionCamera;
+    
     public static Launcher launcher = new Launcher();
     public static Turret turret = new Turret();
     public static Intake intake = new Intake();
