@@ -60,19 +60,15 @@ public class Launcher extends SubsystemBase {
                   flywheelMotor.set(
                       m_shooterFeedforward.calculate(setpointRotationsPerSecond)
                           + m_shooterFeedback.calculate(
-                              flywheelMotor.getEncoder().getVelocity(), setpointRotationsPerSecond));
+                              getFlywheelVelocity(), setpointRotationsPerSecond));
                 }),
 
             // Wait until the shooter has reached the setpoint, and then run the feeder
             waitUntil(m_shooterFeedback::atSetpoint).andThen(() -> powerToFeederAndSpindexer()))
-            .finallyDo(interrupted -> {
-               // runs when command ends OR is interrupted
-          stopLauncherMotors();
-      })
-      .withName("Shoot");
+            .withName("Shoot");
   }
 
-  private void powerToFeederAndSpindexer() {
+  public void powerToFeederAndSpindexer() {
 
       feederMotor.set(1);
       spindexerMotor.set(1);
@@ -84,5 +80,8 @@ public class Launcher extends SubsystemBase {
     flywheelMotor.set(0);
   }
 
+  public double getFlywheelVelocity() {
+    return flywheelMotor.getEncoder().getVelocity()/60d;
+  }
 
 }

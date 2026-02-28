@@ -6,7 +6,11 @@ package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Launcher;
@@ -20,20 +24,41 @@ public class Robot extends TimedRobot {
     public static Launcher launcher = new Launcher();
     public static Turret turret = new Turret();
     public static Intake intake = new Intake();
+
+    UsbCamera camera;
 //
     /* log and replay timestamp and joystick data */
+    @Override   public void robotInit() {
+        camera = CameraServer.startAutomaticCapture();
+        camera.setResolution(320,240);
+        camera.setFPS(15);    
+    }
+
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
         .withTimestampReplay()
         .withJoystickReplay();
 
     public Robot() {
         m_robotContainer = new RobotContainer();
+        PortForwarder.add(5800, "photonvision.local", 5800);
+
     }
 
     @Override
     public void robotPeriodic() {
         m_timeAndJoystickReplay.update();
         CommandScheduler.getInstance().run(); 
+
+        SmartDashboard.putNumber("Turret Encoder Counts", turret.getEncoderCounts());
+        SmartDashboard.putNumber("Intake Encoder Counts", intake.getIntakeMotorPosition());
+        SmartDashboard.putNumber("Turret Angle", turret.getAngle());
+        SmartDashboard.putBoolean("Turret Zero Side Limit Switch", turret.startLimitSwitch.get());
+        SmartDashboard.putBoolean("Turret 180 Side Limit Switch", turret.endLimitSwitch.get());
+        SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
+        SmartDashboard.putBoolean("Intake Outside Limit Switch", intake.outsideLimitSwitch.get());
+        SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
+
+
     }
 
     @Override

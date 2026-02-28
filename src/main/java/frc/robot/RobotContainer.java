@@ -63,8 +63,8 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driver.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -76,7 +76,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
 
-        driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        driver.x().whileTrue(drivetrain.applyRequest(() -> brake));
         driver.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))
         ));
@@ -94,9 +94,10 @@ public class RobotContainer {
         //gunner controls
         
         gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        // gunner.rightBumper().whileTrue(new RunFeeder());
 
         gunner.x().whileTrue(new TurretRotateLeft(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
-        gunner.a().whileTrue(new TurretRotateRight(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
+        gunner.a().whileTrue(new TurretRotateLeft(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
         
         gunner.povUp().whileTrue(new IntakeIn(-Constants.PowerConstants.INTAKE_POSITION_POWER));
         gunner.povDown().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_POWER));
