@@ -30,7 +30,7 @@ public class Intake extends SubsystemBase {
   public void powerToIntakeOut(double percentPower){    
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
-    if (!outsideLimitSwitch.get() || (!insideLimitSwitch.get() && percentPower >= 0)) 
+    if (outsideLimitSwitch.get() && (percentPower >= 0)) 
     {
         intakePositionMotor.set(percentPower);
     }
@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase {
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
 
-    if (insideLimitSwitch.get() || (!outsideLimitSwitch.get() && percentPower >= 0)) 
+    if (insideLimitSwitch.get() && (percentPower <= 0)) 
     {
         intakePositionMotor.set(percentPower);
     } 

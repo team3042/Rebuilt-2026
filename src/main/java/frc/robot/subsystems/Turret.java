@@ -38,9 +38,15 @@ public class Turret extends SubsystemBase {
     return TurretMotor.getEncoder().getPosition();
   }
 
+  public double getAngle() {
+    double encoderCounts = TurretMotor.getEncoder().getPosition();
+    return encoderCounts / 7.6667;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 
 }
