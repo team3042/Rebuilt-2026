@@ -25,13 +25,18 @@ public class Robot extends TimedRobot {
     public static Turret turret = new Turret();
     public static Intake intake = new Intake();
 
-    UsbCamera camera;
-//
+    UsbCamera camera1;
+    UsbCamera camera2;
+
     /* log and replay timestamp and joystick data */
     @Override   public void robotInit() {
-        camera = CameraServer.startAutomaticCapture();
-        camera.setResolution(320,240);
-        camera.setFPS(15);    
+        camera1 = CameraServer.startAutomaticCapture();
+        camera1.setResolution(320,240);
+        camera1.setFPS(15);    
+
+        camera2 = CameraServer.startAutomaticCapture();
+        camera2.setResolution(320,240);
+        camera2.setFPS(15);    
     }
 
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
