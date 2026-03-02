@@ -12,6 +12,7 @@ import frc.robot.subsystems.Turret;
 public class TurretRotate extends Command {
 
   double power;
+  
 
   private Turret turret;
 

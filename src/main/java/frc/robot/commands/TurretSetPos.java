@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Turret;
 import frc.robot.Robot;
 
@@ -14,12 +16,16 @@ public class TurretSetPos extends Command {
 
   Turret turret;
   double encoderCounts;
+  Pose2d robotPose;
 
-  public TurretSetPos(double encoderCounts) {
+  public TurretSetPos(CommandSwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(Robot.turret);
-    this.encoderCounts = encoderCounts;
+    
+    robotPose = drivetrain.getState().Pose;
+    
+    
   }
 
   // Called when the command is initially scheduled.
