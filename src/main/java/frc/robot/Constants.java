@@ -1,8 +1,12 @@
 package frc.robot;
 
-public class Constants {
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 
-    
+public class Constants {
 
    // put all motor IDs in this class
     public static class MotorIDs {
@@ -56,6 +60,93 @@ public class Constants {
         public static double kD = 0;
         public static double DESIRED_RPS = 10;
 
+    }
+    public static class FieldConstants {
 
+        public static final AprilTagFieldLayout FIELD_LAYOUT =
+            AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
+
+        public static final double FIELD_LENGTH = FIELD_LAYOUT.getFieldLength();
+        public static final double FIELD_WIDTH = FIELD_LAYOUT.getFieldWidth();
+
+        public static class Hub {
+
+            
+        // Dimensions
+        public static final double WIDTH =
+            edu.wpi.first.math.util.Units.inchesToMeters(47.0);
+        public static final double HEIGHT =
+            edu.wpi.first.math.util.Units.inchesToMeters(72.0); // includes the catcher at the top
+        public static final double INNER_WIDTH =
+            edu.wpi.first.math.util.Units.inchesToMeters(41.7);
+        public static final double INNER_HEIGHT =
+            edu.wpi.first.math.util.Units.inchesToMeters(56.5);
+
+        // Relevant reference points on alliance side
+        public static final Translation3d topCenterPoint = new Translation3d(
+            FIELD_LAYOUT.getTagPose(26).get().getX() + WIDTH / 2.0,
+            FIELD_WIDTH / 2.0,
+            HEIGHT
+        );
+        public static final Translation3d innerCenterPoint = new Translation3d(
+            FIELD_LAYOUT.getTagPose(26).get().getX() + WIDTH / 2.0,
+            FIELD_WIDTH / 2.0,
+            INNER_HEIGHT
+        );
+
+        public static final Translation2d nearLeftCorner = new Translation2d(
+            topCenterPoint.getX() - WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 + WIDTH / 2.0
+        );
+        public static final Translation2d nearRightCorner = new Translation2d(
+            topCenterPoint.getX() - WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 - WIDTH / 2.0
+        );
+        public static final Translation2d farLeftCorner = new Translation2d(
+            topCenterPoint.getX() + WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 + WIDTH / 2.0
+        );
+        public static final Translation2d farRightCorner = new Translation2d(
+            topCenterPoint.getX() + WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 - WIDTH / 2.0
+        );
+
+        // Relevant reference points on the opposite side
+        public static final Translation3d oppTopCenterPoint = new Translation3d(
+            FIELD_LAYOUT.getTagPose(4).get().getX() + WIDTH / 2.0,
+            FIELD_WIDTH / 2.0,
+            HEIGHT
+        );
+        public static final Translation2d oppNearLeftCorner = new Translation2d(
+            oppTopCenterPoint.getX() - WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 + WIDTH / 2.0
+        );
+        public static final Translation2d oppNearRightCorner = new Translation2d(
+            oppTopCenterPoint.getX() - WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 - WIDTH / 2.0
+        );
+        public static final Translation2d oppFarLeftCorner = new Translation2d(
+            oppTopCenterPoint.getX() + WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 + WIDTH / 2.0
+        );
+        public static final Translation2d oppFarRightCorner = new Translation2d(
+            oppTopCenterPoint.getX() + WIDTH / 2.0,
+            FIELD_WIDTH / 2.0 - WIDTH / 2.0
+        );
+
+        // Hub faces
+        public static final Pose2d nearFace = FIELD_LAYOUT.getTagPose(26)
+            .get()
+            .toPose2d();
+        public static final Pose2d farFace = FIELD_LAYOUT.getTagPose(20)
+            .get()
+            .toPose2d();
+        public static final Pose2d rightFace = FIELD_LAYOUT.getTagPose(18)
+            .get()
+            .toPose2d();
+        public static final Pose2d leftFace = FIELD_LAYOUT.getTagPose(21)
+            .get()
+            .toPose2d();
+        }
     }
 }
