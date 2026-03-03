@@ -70,8 +70,8 @@ public class Launcher extends SubsystemBase {
 
   public void powerToFeederAndSpindexer() {
 
-      feederMotor.set(1);
-      spindexerMotor.set(1);
+      feederMotor.set(-0.4);
+      spindexerMotor.set(0.4);
   }
 
   public void stopLauncherMotors() {

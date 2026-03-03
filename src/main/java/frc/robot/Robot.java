@@ -8,6 +8,7 @@ import com.ctre.phoenix6.HootAutoReplay;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,13 +31,15 @@ public class Robot extends TimedRobot {
 
     /* log and replay timestamp and joystick data */
     @Override   public void robotInit() {
-        camera1 = CameraServer.startAutomaticCapture();
+        camera1 = CameraServer.startAutomaticCapture(0);
         camera1.setResolution(320,240);
-        camera1.setFPS(15);    
+        camera1.setFPS(15);
+        camera1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
 
-        camera2 = CameraServer.startAutomaticCapture();
+        camera2 = CameraServer.startAutomaticCapture(1);
         camera2.setResolution(320,240);
-        camera2.setFPS(15);    
+        camera2.setFPS(15);
+        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     }
 
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
