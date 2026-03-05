@@ -5,9 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Turret;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -17,6 +21,8 @@ public class TurretSetPos extends Command {
   Turret turret;
   double encoderCounts;
   Pose2d robotPose;
+  Pose2d hubCenter;
+  Rotation2d robotRotation;
 
   public TurretSetPos(CommandSwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,8 +30,35 @@ public class TurretSetPos extends Command {
     addRequirements(Robot.turret);
     
     robotPose = drivetrain.getState().Pose;
+    robotRotation = drivetrain.getState().RawHeading;
+
+    if (DriverStation.getAlliance().get().equals(Alliance.Red)) {
+        hubCenter = Constants.FieldConstants.Hub.
+    }
+
+    //insert angle to encoder count method
     
-    
+  }
+
+  //finds the angle the turret needs to be pointed in degrees
+  //TODO: experiment what way X and Y truly is. like is positive Y negative or positive?
+  private double findTurretAngle() {
+
+      double robotX = robotPose.getX();
+      double robotY = robotPose.getY();
+
+      double hubX = hubCenter.getX();
+      double hubY = hubCenter.getY();
+
+      double distX = hubX - robotX;
+      double distY = hubY - robotY;
+
+      double robotAngle = robotRotation.getDegrees();
+
+      double turretDegree = Math.toDegrees(Math.atan(distY/distX)) - robotAngle;
+
+      return (distX > 0) ? turretDegree : turretDegree + 180;
+
   }
 
   // Called when the command is initially scheduled.
