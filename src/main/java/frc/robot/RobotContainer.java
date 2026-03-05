@@ -62,8 +62,8 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driver.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -97,9 +97,10 @@ public class RobotContainer {
 
         gunner.x().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
         gunner.a().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
-        
-        gunner.povUp().whileTrue(new IntakeIn(-Constants.PowerConstants.INTAKE_POSITION_POWER));
-        gunner.povDown().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_POWER));
+        gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
+                
+        gunner.povUp().whileTrue(new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
+        gunner.povDown().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
         gunner.leftBumper().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_RUN_POWER));
         gunner.leftTrigger().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_REVERSE_RUN_POWER));
 
