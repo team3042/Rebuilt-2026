@@ -5,6 +5,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import frc.robot.subsystems.Turret;
 
 public class Constants {
 
@@ -61,6 +62,21 @@ public class Constants {
         public static double DESIRED_RPS = 10;
 
     }
+
+    public static class TurretConstants {
+        
+        public static final double TURRET_STOP_DEGREE_TOLERANCE = 1;
+        public static final double TURRET_STOP_ENCODER_COUNT_TOLERANCE = Turret.angleToEncoderCount(TURRET_STOP_DEGREE_TOLERANCE);
+        
+        public static final double TURRET_SLOW_DEGREE_TOLERANCE = 5;
+        public static final double TURRET_SLOW_ENCODER_COUNT_TOLERANCE = Turret.angleToEncoderCount(TURRET_SLOW_DEGREE_TOLERANCE);
+
+        public static final double TURRET_ROTATE_CLOCKWISE_AUTO_FAST_POWER = 0.8;
+        public static final double TURRET_ROTATE_COUNTERCLOCKWISE_AUTO_FAST_POWER = 0.8;
+        public static final double TURRET_ROTATE_CLOCKWISE_AUTO_SLOW_POWER = 0.2;
+        public static final double TURRET_ROTATE_COUNTERCLOCKWISE_AUTO_SLOW_POWER = 0.2;
+    }
+
     public static class FieldConstants {
 
         public static final AprilTagFieldLayout FIELD_LAYOUT =
@@ -87,11 +103,6 @@ public class Constants {
                 FIELD_LAYOUT.getTagPose(26).get().getX() + WIDTH / 2.0,
                 FIELD_WIDTH / 2.0,
                 HEIGHT
-            );
-            public static final Translation3d blueInnerCenterPoint = new Translation3d(
-                FIELD_LAYOUT.getTagPose(26).get().getX() + WIDTH / 2.0,
-                FIELD_WIDTH / 2.0,
-                INNER_HEIGHT
             );
 
             public static final Translation2d nearLeftCorner = new Translation2d(

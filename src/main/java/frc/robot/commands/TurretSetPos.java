@@ -6,8 +6,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Turret;
@@ -19,13 +21,12 @@ public class TurretSetPos extends Command {
   /** Creates a new TurretSetPos. */
 
   Turret turret;
-  double encoderCounts;
+  double encoderCountsGoal;
   Pose2d robotPose;
-  Pose2d hubCenter;
+  Translation2d hubCenter;
   Rotation2d robotRotation;
 
   public TurretSetPos(CommandSwerveDrivetrain drivetrain) {
-    // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(Robot.turret);
     
@@ -33,11 +34,10 @@ public class TurretSetPos extends Command {
     robotRotation = drivetrain.getState().RawHeading;
 
     if (DriverStation.getAlliance().get().equals(Alliance.Red)) {
-        hubCenter = Constants.FieldConstants.Hub.
+      hubCenter = Constants.FieldConstants.Hub.redTopCenterPoint.toTranslation2d();
+    } else if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+      hubCenter = Constants.FieldConstants.Hub.blueTopCenterPoint.toTranslation2d();
     }
-
-    //insert angle to encoder count method
-    
   }
 
   //finds the angle the turret needs to be pointed in degrees
@@ -70,13 +70,24 @@ public class TurretSetPos extends Command {
   @Override
   public void execute() {
 
-    if (turret.getEncoderCounts() < encoderCounts) {
-      turret.powerToTurret(0.5);
-    } else if (turret.getEncoderCounts() > encoderCounts) {
-      turret.powerToTurret(-0.5);
-    } else {
-      turret.powerToTurret(0);
-    }
+    double goalAngle = findTurretAngle();
+    encoderCountsGoal = Turret.angleToEncoderCount(goalAngle);
+    SmartDashboard.putNumber("Turret Angle Goal", goalAngle);
+
+    double inputPower = 
+    //if turret ISN'T in the stop turret rotation threshold
+      (Math.abs(turret.getEncoderCounts() - encoderCountsGoal) > Constants.TurretConstants.TURRET_STOP_ENCODER_COUNT_TOLERANCE) ? 
+      // if the turret IS in the slow turret rotation threshold
+        (Math.abs(turret.getEncoderCounts() - encoderCountsGoal) < Constants.TurretConstants.TURRET_SLOW_ENCODER_COUNT_TOLERANCE) ?
+        // if the turret needs to rotate clockwise to meet the goal
+          (turret.getEncoderCounts() < encoderCountsGoal) ? Constants.TurretConstants.TURRET_ROTATE_CLOCKWISE_AUTO_SLOW_POWER 
+            : Constants.TurretConstants.TURRET_ROTATE_COUNTERCLOCKWISE_AUTO_SLOW_POWER 
+          : (turret.getEncoderCounts() < encoderCountsGoal) ? Constants.TurretConstants.TURRET_ROTATE_CLOCKWISE_AUTO_FAST_POWER 
+        : Constants.TurretConstants.TURRET_ROTATE_COUNTERCLOCKWISE_AUTO_FAST_POWER 
+      : 0;
+
+    turret.powerToTurret(inputPower);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -89,9 +100,6 @@ public class TurretSetPos extends Command {
   @Override
   public boolean isFinished() {
 
-    if (Math.abs(turret.getEncoderCounts() - encoderCounts) < 10) {
-      return true;
-    }
-    return false;
+    return Math.abs(turret.getEncoderCounts() - encoderCountsGoal) < Constants.TurretConstants.TURRET_STOP_ENCODER_COUNT_TOLERANCE;
   }
 }

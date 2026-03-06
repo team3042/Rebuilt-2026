@@ -43,6 +43,14 @@ public class Turret extends SubsystemBase {
     return encoderCounts / 7.6667;
   }
 
+  public static double angleToEncoderCount(double angle) {
+    return angle * 7.6667;
+  }
+
+  public static double encoderCountToAngle(double angle) {
+    return angle / 7.6667;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
