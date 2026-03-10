@@ -22,8 +22,8 @@ public class Robot extends TimedRobot {
 
     private final RobotContainer m_robotContainer;
 
-    public static Launcher launcher = new Launcher();
-    public static Turret turret = new Turret();
+    // public static Launcher launcher = new Launcher();
+    // public static Turret turret = new Turret();
     public static Intake intake = new Intake();
 
     UsbCamera camera1;
@@ -57,16 +57,15 @@ public class Robot extends TimedRobot {
         m_timeAndJoystickReplay.update();
         CommandScheduler.getInstance().run(); 
 
-        SmartDashboard.putNumber("Turret Encoder Counts", turret.getEncoderCounts());
+        // SmartDashboard.putNumber("Turret Encoder Counts", turret.getEncoderCounts());
         SmartDashboard.putNumber("Intake Encoder Counts", intake.getIntakeMotorPosition());
-        SmartDashboard.putNumber("Turret Angle", turret.getAngle());
-        SmartDashboard.putBoolean("Turret Zero Side Limit Switch", turret.startLimitSwitch.get());
-        SmartDashboard.putBoolean("Turret 180 Side Limit Switch", turret.endLimitSwitch.get());
+        // SmartDashboard.putNumber("Turret Angle", turret.getAngle());
+        // SmartDashboard.putBoolean("Turret Zero Side Limit Switch", turret.startLimitSwitch.get());
+        // SmartDashboard.putBoolean("Turret 180 Side Limit Switch", turret.endLimitSwitch.get());
         SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
         SmartDashboard.putBoolean("Intake Outside Limit Switch", intake.outsideLimitSwitch.get());
-        SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
-
-
+        // SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
+        // SmartDashboard.putNumber("True FW Velocity", launcher.getTrueFlywheelVelocity());
     }
 
     @Override

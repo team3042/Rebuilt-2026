@@ -51,6 +51,9 @@ public class RobotContainer {
         configureBindings();
 
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+        // NamedCommands.registerCommand("Aim and Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        // NamedCommands.registerCommand("Extend Intake", new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
+        // NamedCommands.registerCommand("Run Intake", new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -92,15 +95,17 @@ public class RobotContainer {
 
         //gunner controls
         
-        gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        // gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        // gunner.rightBumper().whileTrue(Robot.launcher.shootCommand2());
+
         // gunner.rightBumper().whileTrue(new RunFeeder());
 
-        gunner.x().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
-        gunner.a().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
-        gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
-        
-        gunner.povUp().whileTrue(new IntakeIn(-Constants.PowerConstants.INTAKE_POSITION_POWER));
-        gunner.povDown().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_POWER));
+        // gunner.x().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
+        // gunner.a().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
+        // gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
+                
+        gunner.povDown().whileTrue(new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
+        gunner.povUp().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
         gunner.leftBumper().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_RUN_POWER));
         gunner.leftTrigger().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_REVERSE_RUN_POWER));
 

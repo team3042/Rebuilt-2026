@@ -23,6 +23,8 @@ public class Constants {
 
         public static final int TURRET_START_LIMIT_SWITCH_ID = 1;
         public static final int TURRET_END_LIMIT_SWITCH_ID = 0;
+
+        public static final int CLIMBER_LIMIT_SWITCH_ID = 4;
         
     }
     
@@ -46,14 +48,12 @@ public class Constants {
         //TODO: find kSVolts
         public static double KS_VOLTS = 0.1;
         public static double KV_VOLTS_SECONDS_PER_ROTATION = 0.38;
-        // public static double kP = 1.12; // this might be too high
-        public static double kP = 0.012;
-        public static double KSHOOTER_TOLERANCE_RPS = 0.05;
         public static double KA_VOLTS = 0.09;
+        // PID gains
+        public static double kP = 0.002;
+        public static double KSHOOTER_TOLERANCE_RPS = 5;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 10;
-
-
+        public static double DESIRED_RPS = 30;
     }
 }

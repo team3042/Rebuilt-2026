@@ -68,6 +68,13 @@ public class Launcher extends SubsystemBase {
             .withName("Shoot");
   }
 
+  public Command shootCommand2() {
+    return parallel(
+
+      run(() -> flywheelMotor.set(1)),
+      run(() -> powerToFeederAndSpindexer()));
+  }
+
   public void powerToFeederAndSpindexer() {
 
       feederMotor.set(-0.4);
@@ -84,4 +91,7 @@ public class Launcher extends SubsystemBase {
     return flywheelMotor.getEncoder().getVelocity()/60d;
   }
 
+  public double getTrueFlywheelVelocity() {
+    return flywheelMotor.getEncoder().getVelocity();
+  }
 }
