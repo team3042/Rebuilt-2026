@@ -29,8 +29,10 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 public class RobotContainer {
 
     private SendableChooser<Command> autoChooser;
-    private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
+                                                                                        // speed
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
+                                                                                      // max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -51,9 +53,12 @@ public class RobotContainer {
         configureBindings();
 
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-        // NamedCommands.registerCommand("Aim and Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
-        // NamedCommands.registerCommand("Extend Intake", new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
-        // NamedCommands.registerCommand("Run Intake", new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
+        // NamedCommands.registerCommand("Aim and Shoot",
+        // Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        // NamedCommands.registerCommand("Extend Intake", new
+        // IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
+        // NamedCommands.registerCommand("Run Intake", new
+        // IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -63,25 +68,23 @@ public class RobotContainer {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-driver.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            )
-        );
+                // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(() -> drive.withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with
+                                                                                                 // negative Y (forward)
+                        .withVelocityY(-driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                        .withRotationalRate(-driver.getRightX() * MaxAngularRate) // Drive counterclockwise with
+                                                                                  // negative X (left)
+                ));
 
         // Idle while the robot is disabled. This ensures the configured
         // neutral mode is applied to the drive motors while disabled.
         final var idle = new SwerveRequest.Idle();
         RobotModeTriggers.disabled().whileTrue(
-            drivetrain.applyRequest(() -> idle).ignoringDisable(true)
-        );
+                drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
         driver.x().whileTrue(drivetrain.applyRequest(() -> brake));
-        driver.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))
-        ));
+        driver.b().whileTrue(drivetrain
+                .applyRequest(() -> point.withModuleDirection(new Rotation2d(-driver.getLeftY(), -driver.getLeftX()))));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -93,17 +96,19 @@ public class RobotContainer {
         // Reset the field-centric heading on left bumper press.
         driver.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
-        //gunner controls
-        
+        // gunner controls
+
         // gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
         // gunner.rightBumper().whileTrue(Robot.launcher.shootCommand2());
 
         // gunner.rightBumper().whileTrue(new RunFeeder());
 
-        // gunner.x().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
-        // gunner.a().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
+        // gunner.x().whileTrue(new
+        // TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
+        // gunner.a().whileTrue(new
+        // TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
         // gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
-                
+
         gunner.povDown().whileTrue(new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
         gunner.povUp().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
         gunner.leftBumper().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_RUN_POWER));
@@ -114,24 +119,8 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
 
-            // return autoChooser.getSelected();
+        return autoChooser.getSelected();
 
-        // Simple drive forward auton (EXAMPLE ONLY - replace with pathplanner auto)
-        final var idle = new SwerveRequest.Idle();
-        return Commands.sequence(
-            // Reset our field centric heading to match the robot
-            // facing away from our alliance station wall (0 deg).
-            drivetrain.runOnce(() -> drivetrain.seedFieldCentric(Rotation2d.kZero)),
-            // Then slowly drive forward (away from us) for 5 seconds.
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(0.5)
-                    .withVelocityY(0)
-                    .withRotationalRate(0)
-            )
-            .withTimeout(5.0),
-            // Finally idle for the rest of auton
-            drivetrain.applyRequest(() -> idle)
-        );
     }
-    
+
 }

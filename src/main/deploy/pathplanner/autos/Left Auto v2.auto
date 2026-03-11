@@ -5,22 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Bottom To Shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Aim and Shoot"
-                }
-              }
-            ]
+            "name": "Aim and Shoot"
           }
         },
         {
@@ -30,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "bShoot to Outpost"
+                  "pathName": "Left To Depot"
                 }
               },
               {
@@ -42,11 +29,29 @@
                       "data": {
                         "name": "Extend Intake"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Run Intake"
+                      }
                     }
                   ]
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Aim and Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Neutral"
           }
         }
       ]
