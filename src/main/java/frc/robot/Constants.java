@@ -32,7 +32,8 @@ public class Constants {
         
         public static final double INTAKE_RUN_POWER = -0.8;
         public static final double INTAKE_REVERSE_RUN_POWER = 0.5;
-        public static final double INTAKE_POSITION_POWER = 0.15;
+        public static final double INTAKE_POSITION_IN_POWER = 0.15;
+        public static final double INTAKE_POSITION_OUT_POWER = -0.15;
 
         public static final double TURRET_MOTOR_POWER_LEFT = -0.5;
         public static final double TURRET_MOTOR_POWER_RIGHT = 0.5;

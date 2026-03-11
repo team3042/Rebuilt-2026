@@ -22,7 +22,7 @@ public class Launcher extends SubsystemBase {
 
   private final SimpleMotorFeedforward m_shooterFeedforward =
       new SimpleMotorFeedforward(
-          LauncherConstants.KS_VOLTS, LauncherConstants.KV_VOLTS_SECONDS_PER_ROTATION, LauncherConstants.KA_VOLTS);
+          LauncherConstants.KS_VOLTS, LauncherConstants.KV_VOLTS, LauncherConstants.KA_VOLTS);
   private final PIDController m_shooterFeedback = new PIDController(LauncherConstants.kP, LauncherConstants.kI, LauncherConstants.kD);
 
   /** The shooter subsystem for the robot. */
@@ -78,7 +78,7 @@ public class Launcher extends SubsystemBase {
   public void powerToFeederAndSpindexer() {
 
       feederMotor.set(-0.4);
-      spindexerMotor.set(0.4);
+      spindexerMotor.set(0.6);
   }
 
   public void stopLauncherMotors() {

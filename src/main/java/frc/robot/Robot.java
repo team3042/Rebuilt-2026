@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
 
     UsbCamera camera1;
     UsbCamera camera2;
-
+//
     /* log and replay timestamp and joystick data */
     @Override   public void robotInit() {
         camera1 = CameraServer.startAutomaticCapture(0);
@@ -39,8 +39,7 @@ public class Robot extends TimedRobot {
         camera2 = CameraServer.startAutomaticCapture(1);
         camera2.setResolution(320,240);
         camera2.setFPS(15);
-        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    }
+        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);    }
 
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
         .withTimestampReplay()
