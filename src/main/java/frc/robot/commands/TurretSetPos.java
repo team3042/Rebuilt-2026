@@ -18,8 +18,8 @@ public class TurretSetPos extends Command {
   public TurretSetPos(double encoderCounts) {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    addRequirements(Robot.turret);
-    this.encoderCounts = encoderCounts;
+    // addRequirements(Robot.turret);
+    // this.encoderCounts = encoderCounts;
   }
 
   // Called when the command is initially scheduled.

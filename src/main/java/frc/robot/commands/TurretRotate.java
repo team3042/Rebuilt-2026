@@ -19,8 +19,8 @@ public class TurretRotate extends Command {
   public TurretRotate(double pow) {
     power = pow;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.turret);
-    turret = Robot.turret;
+  //   addRequirements(Robot.turret);
+  //   turret = Robot.turret;
   }
 
   // Called when the command is initially scheduled.
