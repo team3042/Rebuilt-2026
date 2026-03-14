@@ -5,15 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Shoot"
+            "pathName": "Middle to Shoot"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "mShoot to bNeutral"
+            "name": "Shoot"
           }
         }
       ]
