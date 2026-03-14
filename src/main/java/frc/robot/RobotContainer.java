@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.TurretRotate;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.IntakePower;
@@ -95,13 +94,10 @@ public class RobotContainer {
 
         //gunner controls
         
-        // gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
         // gunner.rightBumper().whileTrue(Robot.launcher.shootCommand2());
 
         // gunner.rightBumper().whileTrue(new RunFeeder());
-
-        // gunner.x().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
-        // gunner.a().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
         // gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
                 
         gunner.povDown().whileTrue(new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));

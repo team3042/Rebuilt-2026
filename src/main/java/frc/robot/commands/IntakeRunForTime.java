@@ -5,54 +5,55 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Turret;
 import frc.robot.Robot;
+import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.Timer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class TurretSetPos extends Command {
-  /** Creates a new TurretSetPos. */
+public class IntakeRunForTime extends Command {
 
-  Turret turret;
-  double encoderCounts;
+  double power;
+  double intakeRunTime;
+  Timer intakeTimer = new Timer();
+  Intake intake;
 
-  public TurretSetPos(double encoderCounts) {
+
+  /** Creates a new IntakeRunForTime. */
+  public IntakeRunForTime(double powerlocal, double runtime) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Robot.intake);
+    power = powerlocal;
+    intakeRunTime = runtime;
+    intake = Robot.intake;
 
-    // addRequirements(Robot.turret);
-    // this.encoderCounts = encoderCounts;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    intakeTimer.reset();
+    intakeTimer.start();
+    System.out.println("power: " + power);
+    System.out.println("RunTime: " + intakeRunTime);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    if (turret.getEncoderCounts() < encoderCounts) {
-      turret.powerToTurret(0.5);
-    } else if (turret.getEncoderCounts() > encoderCounts) {
-      turret.powerToTurret(-0.5);
-    } else {
-      turret.powerToTurret(0);
-    }
+    intake.powerToIntakeRun(power);
+    System.out.println("setting intake POWER");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    turret.powerToTurret(0);
+    intake.stopRunMotor();
+    intakeTimer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-    if (Math.abs(turret.getEncoderCounts() - encoderCounts) < 10) {
-      return true;
-    }
-    return false;
+    return intakeTimer.hasElapsed(intakeRunTime);
   }
 }

@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Turret;
 
 @Logged
 public class Robot extends TimedRobot {
@@ -25,8 +24,7 @@ public class Robot extends TimedRobot {
 
     private final RobotContainer m_robotContainer;
 
-    // public static Launcher launcher = new Launcher();
-    // public static Turret turret = new Turret();
+    public static Launcher launcher = new Launcher();
     public static Intake intake = new Intake();
 
     UsbCamera camera1;

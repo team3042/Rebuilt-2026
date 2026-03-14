@@ -68,11 +68,20 @@ public class Launcher extends SubsystemBase {
             .withName("Shoot");
   }
 
+  // launcherTime is in seconds, runs the launcher for a specified amount of time "launcherTime"
+  public Command shootForTimeCommand(double setpointRotationsPerSecond, double launcherTime) {
+    return shootCommand(setpointRotationsPerSecond).withTimeout(launcherTime);
+  }
+
   public Command shootCommand2() {
     return parallel(
 
       run(() -> flywheelMotor.set(1)),
       run(() -> powerToFeederAndSpindexer()));
+  }
+
+  public void powerToFlywheelMotor(double power) {
+    flywheelMotor.set(power);
   }
 
   public void powerToFeederAndSpindexer() {
