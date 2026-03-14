@@ -75,6 +75,10 @@ public class Launcher extends SubsystemBase {
       run(() -> powerToFeederAndSpindexer()));
   }
 
+  public void powerToFlywheelMotor(double power) {
+    flywheelMotor.set(power);
+  }
+
   public void powerToFeederAndSpindexer() {
 
       feederMotor.set(-0.4);
@@ -93,5 +97,13 @@ public class Launcher extends SubsystemBase {
 
   public double getTrueFlywheelVelocity() {
     return flywheelMotor.getEncoder().getVelocity();
+  }
+
+  public SimpleMotorFeedforward getMotorFeedforward() {
+    return m_shooterFeedforward;
+  }
+
+  public PIDController getMotorFeedback() {
+    return m_shooterFeedback;
   }
 }

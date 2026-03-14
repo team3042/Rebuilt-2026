@@ -22,8 +22,8 @@ public class Robot extends TimedRobot {
 
     private final RobotContainer m_robotContainer;
 
-    // public static Launcher launcher = new Launcher();
-    // public static Turret turret = new Turret();
+    public static Launcher launcher = new Launcher();
+    public static Turret turret = new Turret();
     public static Intake intake = new Intake();
 
     UsbCamera camera1;
