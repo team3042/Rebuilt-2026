@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.IntakePower;
-import frc.robot.commands.TurretRotate;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -93,11 +92,7 @@ public class RobotContainer {
         //gunner controls
         
         gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
-        // gunner.rightBumper().whileTrue(new RunFeeder());
 
-        gunner.x().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_LEFT));
-        gunner.a().whileTrue(new TurretRotate(Constants.PowerConstants.TURRET_MOTOR_POWER_RIGHT));
-        
         gunner.povUp().whileTrue(new IntakeIn(-Constants.PowerConstants.INTAKE_POSITION_POWER));
         gunner.povDown().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_POWER));
         gunner.leftBumper().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_RUN_POWER));
