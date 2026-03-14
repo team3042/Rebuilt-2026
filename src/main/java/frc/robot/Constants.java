@@ -48,7 +48,7 @@ public class Constants {
 
         //TODO: find kSVolts
         public static double KS_VOLTS = 0.1;
-        public static double KV_VOLTS_SECONDS_PER_ROTATION = 0.38;
+        public static double KV_VOLTS = 0.38;
         public static double KA_VOLTS = 0.09;
         // PID gains
         public static double kP = 0.002;
