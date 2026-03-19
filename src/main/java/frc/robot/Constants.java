@@ -6,13 +6,10 @@ public class Constants {
     public static class MotorIDs {
 
         public static final int INTAKE_RUN_MOTOR_ID = 21;
-        public static final int INTAKE_POSITION_MOTOR_ID = 22;
+        public static final int INTAKE_POSITION_MOTOR_ID = 26;
         public static final int SPINDEXER_MOTOR_ID = 23;
         public static final int FEEDER_MOTOR_ID = 24;
-        public static final int FLYWHEEL_MOTOR_ID = 25;
-        public static final int TURRET_MOTOR_ID = 26;
-        public static final int HOOD_MOTOR_ID = 27;
-        
+        public static final int FLYWHEEL_MOTOR_ID = 22;
 
     }
 
@@ -45,14 +42,14 @@ public class Constants {
     public static class LauncherConstants {
 
         //TODO: find kSVolts
-        public static double KS_VOLTS = 0.1;
-        public static double KV_VOLTS = 0.38;
-        public static double KA_VOLTS = 0.09;
+        public static double KS_VOLTS = 0;
+        public static double KV_VOLTS = 0.011;
+        public static double KA_VOLTS = 0.01;
         // PID gains
-        public static double kP = 0.002;
-        public static double KSHOOTER_TOLERANCE_RPS = 5;
+        public static double kP = 0.001;
+        public static double KSHOOTER_TOLERANCE_RPS = 192;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 30;
+        public static double DESIRED_RPS = 60;
     }
 }

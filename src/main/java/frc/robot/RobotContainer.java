@@ -95,10 +95,10 @@ public class RobotContainer {
         //gunner controls
         
         gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
-        // gunner.rightBumper().whileTrue(Robot.launcher.shootCommand2());
+        //gunner.rightBumper().whileTrue(Robot.launcher.shootCommand2());
 
         // gunner.rightBumper().whileTrue(new RunFeeder());
-        // gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
+        gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
                 
         gunner.povDown().whileTrue(new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
         gunner.povUp().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));

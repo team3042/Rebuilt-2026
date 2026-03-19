@@ -9,6 +9,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,6 +20,7 @@ public class Launcher extends SubsystemBase {
   private final SparkMax flywheelMotor;
   private final SparkMax feederMotor;
   private final SparkMax spindexerMotor;
+  private boolean atSP = true;
 
   private final SimpleMotorFeedforward m_shooterFeedforward =
       new SimpleMotorFeedforward(
@@ -52,15 +54,32 @@ public class Launcher extends SubsystemBase {
    *
    * @param setpointRotationsPerSecond The desired shooter velocity
    */
+  // public Command shootCommand(double setpointRotationsPerSecond) {
+  //   return parallel(
+  //           // Run the shooter flywheel at the desired setpoint using feedforward and feedback
+  //           run(
+  //               () -> {
+  //                 flywheelMotor.set(0.4);
+  //               }),
+
+  //           // Wait until the shooter has reached the setpoint, and then run the feeder
+  //           waitUntil(m_shooterFeedback::atSetpoint).andThen(() -> powerToFeederAndSpindexer()))
+  //           .withName("Shoot");
+  // }
   public Command shootCommand(double setpointRotationsPerSecond) {
+
+    double power = m_shooterFeedforward.calculate(setpointRotationsPerSecond)
+                          + m_shooterFeedback.calculate(
+                              getFlywheelVelocity(), setpointRotationsPerSecond);
+
+    SmartDashboard.putNumber("Flywheel Motor Power", power);
+    SmartDashboard.putNumber("Flywheel Set Point RPS", setpointRotationsPerSecond);
+    
     return parallel(
             // Run the shooter flywheel at the desired setpoint using feedforward and feedback
             run(
                 () -> {
-                  flywheelMotor.set(
-                      m_shooterFeedforward.calculate(setpointRotationsPerSecond)
-                          + m_shooterFeedback.calculate(
-                              getFlywheelVelocity(), setpointRotationsPerSecond));
+                  flywheelMotor.set(power);
                 }),
 
             // Wait until the shooter has reached the setpoint, and then run the feeder
@@ -76,7 +95,7 @@ public class Launcher extends SubsystemBase {
   public Command shootCommand2() {
     return parallel(
 
-      run(() -> flywheelMotor.set(1)),
+      run(() -> flywheelMotor.set(0.5)),
       run(() -> powerToFeederAndSpindexer()));
   }
 
@@ -87,7 +106,7 @@ public class Launcher extends SubsystemBase {
   public void powerToFeederAndSpindexer() {
 
       feederMotor.set(-0.4);
-      spindexerMotor.set(0.6);
+      spindexerMotor.set(0.8);
   }
 
   public void stopLauncherMotors() {
