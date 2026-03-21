@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -33,8 +34,15 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.1)
+            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+    private final FieldCentricFacingAngle rotateToAngle = new FieldCentricFacingAngle()
+            .withDeadband(MaxSpeed * 0.1)
+            .withRotationalDeadband(MaxAngularRate * 0.1)
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
@@ -92,6 +100,9 @@ public class RobotContainer {
         // Reset the field-centric heading on left bumper press.
         driver.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
+        // TODO: Allegedly rotates the robot to Hub (needs testing and tweaking perhaps sequential command groud with X stance)
+        driver.rightBumper().whileTrue(getRotateCommand());
+
         //gunner controls
         
         gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
@@ -112,5 +123,13 @@ public class RobotContainer {
 
         return autoChooser.getSelected();
     }
-    
+
+
+    public Command getRotateCommand() {
+        return drivetrain.applyRequest(() -> rotateToAngle
+            .withTargetDirection(Rotation2d.fromDegrees(drivetrain.getAngleToHub()))
+            .withVelocityX(0)
+            .withVelocityY(0)
+        );
+    }
 }

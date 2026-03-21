@@ -22,6 +22,7 @@ import edu.wpi.first.math.numbers.N3;
 import org.json.simple.parser.ParseException;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -344,12 +345,18 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
-    private double findAngleToHub() {
+
+    public Pose2d getPose() {
+        return getState().Pose;
+    }
+    public Rotation2d getHeading() {
+        return getState().RawHeading;
+    }
+
+    public double getAngleToHub() {
         
-        Pose2d robotPose = getState().Pose;
+        Pose2d robotPose = getPose();
         Translation2d hubCenter = null;
-        //TODO: change this RawHeading to include vision
-        Rotation2d robotAngle = getState().RawHeading;
         double desiredAngle = 0;
 
         if (DriverStation.getAlliance().get().equals(Alliance.Red)) {
@@ -394,7 +401,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             }
         }
 
-        SmartDashboard.put
+        SmartDashboard.putString("Robot Location", robotX + ", " + robotY);
+        SmartDashboard.putString("Hub Location", hubX + ", " + hubY);
+        SmartDashboard.putNumber("Desired Angle", desiredAngle);
+        SmartDashboard.putNumber("Current facing", getState().RawHeading.getDegrees());
 
         return desiredAngle;
 
@@ -404,4 +414,5 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     return (distX - Constants.TurretConstants.ROBOT_TO_TURRET_RADIUS*Math.sin(theta))/
         (distY - Constants.TurretConstants.ROBOT_TO_TURRET_RADIUS*Math.cos(theta));
   }
+
 }
