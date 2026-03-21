@@ -9,8 +9,10 @@ import com.ctre.phoenix6.HootAutoReplay;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,6 +49,8 @@ public class Robot extends TimedRobot {
     public Robot() {
         m_robotContainer = new RobotContainer();
         PortForwarder.add(5800, "photonvision.local", 5800);
+        DataLogManager.start();
+        Epilogue.bind(this);
 
     }
 
@@ -58,8 +62,8 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putNumber("Intake Encoder Counts", intake.getIntakeMotorPosition());
         SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
-        SmartDashboard.putBoolean("Intake Outside Limit Switch", intake.outsideLimitSwitch.get());
         SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
+        SmartDashboard.putNumber("True FW Velocity", launcher.getTrueFlywheelVelocity());
     }
 
     @Override
