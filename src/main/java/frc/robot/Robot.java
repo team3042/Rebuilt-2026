@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Turret;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
@@ -45,6 +44,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        
         m_timeAndJoystickReplay.update();
         CommandScheduler.getInstance().run(); 
 
@@ -52,8 +52,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
         SmartDashboard.putBoolean("Intake Outside Limit Switch", intake.outsideLimitSwitch.get());
         SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
-
-
     }
 
     @Override

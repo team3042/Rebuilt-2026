@@ -5,7 +5,6 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import frc.robot.subsystems.Turret;
 
 public class Constants {
 
@@ -64,17 +63,13 @@ public class Constants {
     }
 
     public static class TurretConstants {
-        
-        public static final double TURRET_STOP_DEGREE_TOLERANCE = 1;
-        public static final double TURRET_STOP_ENCODER_COUNT_TOLERANCE = Turret.angleToEncoderCount(TURRET_STOP_DEGREE_TOLERANCE);
-        
-        public static final double TURRET_SLOW_DEGREE_TOLERANCE = 5;
-        public static final double TURRET_SLOW_ENCODER_COUNT_TOLERANCE = Turret.angleToEncoderCount(TURRET_SLOW_DEGREE_TOLERANCE);
 
-        public static final double TURRET_ROTATE_CLOCKWISE_AUTO_FAST_POWER = 0.8;
-        public static final double TURRET_ROTATE_COUNTERCLOCKWISE_AUTO_FAST_POWER = 0.8;
-        public static final double TURRET_ROTATE_CLOCKWISE_AUTO_SLOW_POWER = 0.2;
-        public static final double TURRET_ROTATE_COUNTERCLOCKWISE_AUTO_SLOW_POWER = 0.2;
+        // X is left and right, Y is front to back (in meters)
+        // TODO: measure these values;
+        public static final double TURRET_X_OFFSET = 0.1778;
+        public static final double TURRET_Y_OFFSET = 0.1397;
+        public static final double ROBOT_TO_TURRET_RADIUS = Math.sqrt(TURRET_X_OFFSET*TURRET_X_OFFSET + TURRET_Y_OFFSET*TURRET_Y_OFFSET);
+
     }
 
     public static class FieldConstants {
