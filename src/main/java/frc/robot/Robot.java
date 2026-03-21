@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         
         m_timeAndJoystickReplay.update();
+
         CommandScheduler.getInstance().run(); 
 
         SmartDashboard.putNumber("Intake Encoder Counts", intake.getIntakeMotorPosition());
@@ -121,5 +122,4 @@ public class Robot extends TimedRobot {
 
     @Override
     public void simulationPeriodic() {}
-    
 }
