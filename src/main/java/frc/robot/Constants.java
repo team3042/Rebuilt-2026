@@ -15,11 +15,8 @@ public class Constants {
 
     public static class DigitalIO {
 
-        public static final int INTAKE_INSIDE_LIMIT_SWITCH_ID = 2;
-        public static final int INTAKE_OUTSIDE_LIMIT_SWITCH_ID = 3;
-
-        public static final int TURRET_START_LIMIT_SWITCH_ID = 1;
-        public static final int TURRET_END_LIMIT_SWITCH_ID = 0;
+        public static final int INTAKE_INSIDE_LIMIT_SWITCH_ID = 3;
+        //public static final int INTAKE_OUTSIDE_LIMIT_SWITCH_ID = 4;
         
     }
     
@@ -30,11 +27,6 @@ public class Constants {
         public static final double INTAKE_POSITION_IN_POWER = 0.15;
         public static final double INTAKE_POSITION_OUT_POWER = -0.15;
 
-        public static final double TURRET_MOTOR_POWER_LEFT = -0.5;
-        public static final double TURRET_MOTOR_POWER_RIGHT = 0.5;
-
-        public static final double FLYWHEEL_POWER = 0.5;
-
         public static final double FEEDER_RUN_TO_LAUNCHER_POWER = 0.5;
         public static final double FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER = -0.5;
     }
@@ -43,13 +35,13 @@ public class Constants {
 
         //TODO: find kSVolts
         public static double KS_VOLTS = 0;
-        public static double KV_VOLTS = 0.011;
+        public static double KV_VOLTS = 0.0097;
         public static double KA_VOLTS = 0.01;
         // PID gains
         public static double kP = 0.001;
-        public static double KSHOOTER_TOLERANCE_RPS = 192;
+        public static double KSHOOTER_TOLERANCE_RPS = 54;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 60;
+        public static double DESIRED_RPS = 54;
     }
 }

@@ -63,7 +63,6 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putNumber("Intake Encoder Counts", intake.getIntakeMotorPosition());
         SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
-        SmartDashboard.putBoolean("Intake Outside Limit Switch", intake.outsideLimitSwitch.get());
         SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
         SmartDashboard.putNumber("True FW Velocity", launcher.getTrueFlywheelVelocity());
     }

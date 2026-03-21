@@ -14,7 +14,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 @Logged
 public class Intake extends SubsystemBase {
   
-  public final DigitalInput outsideLimitSwitch;
+  // public final DigitalInput outsideLimitSwitch;
   public final DigitalInput insideLimitSwitch;
 
   private final SparkMax intakePositionMotor;
@@ -25,14 +25,14 @@ public class Intake extends SubsystemBase {
     intakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
     intakeRunMotor = new SparkMax(Constants.MotorIDs.INTAKE_RUN_MOTOR_ID, MotorType.kBrushless);
     insideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
-    outsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
+    //outsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
   }
 
   //method that gets Intake into position
   public void powerToIntakeOut(double percentPower){    
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
-    if (outsideLimitSwitch.get() && (percentPower <= 0)) 
+    if ((percentPower <= 0) && (intakePositionMotor.getEncoder().getPosition() > -30)) 
     {
         intakePositionMotor.set(percentPower);
     }
