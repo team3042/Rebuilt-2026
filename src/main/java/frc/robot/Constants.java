@@ -48,14 +48,14 @@ public class Constants {
         public static double KSHOOTER_TOLERANCE_RPS = 54;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 10;
+        public static double DESIRED_RPS = 54;
 
     }
 
     public static class TurretConstants {
 
         // X is left and right, Y is front to back (in meters)
-        // TODO: measure these values;
+        // TODO: measure these values more precisely;
         public static final double TURRET_X_OFFSET = 0.1778;
         public static final double TURRET_Y_OFFSET = 0.1397;
         public static final double ROBOT_TO_TURRET_RADIUS = Math.sqrt(TURRET_X_OFFSET*TURRET_X_OFFSET + TURRET_Y_OFFSET*TURRET_Y_OFFSET);
@@ -72,7 +72,6 @@ public class Constants {
 
         public static class Hub {
 
-            
             // Dimensions
             public static final double WIDTH =
                 edu.wpi.first.math.util.Units.inchesToMeters(47.0);

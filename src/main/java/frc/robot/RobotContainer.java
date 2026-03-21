@@ -101,7 +101,13 @@ public class RobotContainer {
         driver.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         // TODO: Allegedly rotates the robot to Hub (needs testing and tweaking perhaps sequential command groud with X stance)
-        driver.rightBumper().whileTrue(getRotateCommand());
+        driver.rightBumper().whileTrue(
+            drivetrain.applyRequest(() -> rotateToAngle
+                .withTargetDirection(Rotation2d.fromDegrees(drivetrain.getAngleToHub()))
+                .withVelocityX(0)
+                .withVelocityY(0)
+            )
+        );
 
         //gunner controls
         
@@ -122,14 +128,5 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
 
         return autoChooser.getSelected();
-    }
-
-
-    public Command getRotateCommand() {
-        return drivetrain.applyRequest(() -> rotateToAngle
-            .withTargetDirection(Rotation2d.fromDegrees(drivetrain.getAngleToHub()))
-            .withVelocityX(0)
-            .withVelocityY(0)
-        );
     }
 }
