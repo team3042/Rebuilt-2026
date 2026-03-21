@@ -4,24 +4,26 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+@Logged
 public class Intake extends SubsystemBase {
   
   public final DigitalInput outsideLimitSwitch;
   public final DigitalInput insideLimitSwitch;
 
   private final SparkMax intakePositionMotor;
-  private final SparkMax IntakeRunMotor;
+  private final SparkMax intakeRunMotor;
 
     /** Creates a new IntakeOutIn. */
   public Intake() {
     intakePositionMotor = new SparkMax(Constants.MotorIDs.INTAKE_POSITION_MOTOR_ID, MotorType.kBrushless);
-    IntakeRunMotor = new SparkMax(Constants.MotorIDs.INTAKE_RUN_MOTOR_ID, MotorType.kBrushless);
+    intakeRunMotor = new SparkMax(Constants.MotorIDs.INTAKE_RUN_MOTOR_ID, MotorType.kBrushless);
     insideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_INSIDE_LIMIT_SWITCH_ID);
     outsideLimitSwitch = new DigitalInput(Constants.DigitalIO.INTAKE_OUTSIDE_LIMIT_SWITCH_ID);
   }
@@ -30,7 +32,7 @@ public class Intake extends SubsystemBase {
   public void powerToIntakeOut(double percentPower){    
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
-    if (outsideLimitSwitch.get() && (percentPower >= 0)) 
+    if (outsideLimitSwitch.get() && (percentPower <= 0)) 
     {
         intakePositionMotor.set(percentPower);
     }
@@ -45,7 +47,7 @@ public class Intake extends SubsystemBase {
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
 
-    if (insideLimitSwitch.get() && (percentPower <= 0)) 
+    if (insideLimitSwitch.get() && (percentPower >= 0)) 
     {
         intakePositionMotor.set(percentPower);
     } 
@@ -58,7 +60,7 @@ public class Intake extends SubsystemBase {
   public void powerToIntakeRun(double percentPower) {
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
-    IntakeRunMotor.set(percentPower);
+    intakeRunMotor.set(percentPower);
   }
 
   public void stopPositionMotor() {
@@ -66,7 +68,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void stopRunMotor() {
-    IntakeRunMotor.set(0);
+    intakeRunMotor.set(0);
   }
 
   public double getIntakeMotorPosition() {

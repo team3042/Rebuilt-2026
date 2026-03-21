@@ -18,7 +18,7 @@ public class Constants {
         public static final int FLYWHEEL_MOTOR_ID = 25;
         public static final int TURRET_MOTOR_ID = 26;
         public static final int HOOD_MOTOR_ID = 27;
-        public static final int CLIMBER_MOTOR_ID = 28;
+        
 
     }
 
@@ -36,7 +36,8 @@ public class Constants {
         
         public static final double INTAKE_RUN_POWER = -0.8;
         public static final double INTAKE_REVERSE_RUN_POWER = 0.5;
-        public static final double INTAKE_POSITION_POWER = 0.15;
+        public static final double INTAKE_POSITION_IN_POWER = 0.15;
+        public static final double INTAKE_POSITION_OUT_POWER = -0.15;
 
         public static final double TURRET_MOTOR_POWER_LEFT = -0.5;
         public static final double TURRET_MOTOR_POWER_RIGHT = 0.5;
@@ -51,11 +52,11 @@ public class Constants {
 
         //TODO: find kSVolts
         public static double KS_VOLTS = 0.1;
-        public static double KV_VOLTS_SECONDS_PER_ROTATION = 0.38;
-        // public static double kP = 1.12; // this might be too high
-        public static double kP = 0.012;
-        public static double KSHOOTER_TOLERANCE_RPS = 0.05;
+        public static double KV_VOLTS = 0.38;
         public static double KA_VOLTS = 0.09;
+        // PID gains
+        public static double kP = 0.002;
+        public static double KSHOOTER_TOLERANCE_RPS = 5;
         public static double kI = 0;
         public static double kD = 0;
         public static double DESIRED_RPS = 10;
