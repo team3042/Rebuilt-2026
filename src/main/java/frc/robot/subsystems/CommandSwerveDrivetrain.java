@@ -374,23 +374,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double distX = hubX - robotX;
         double distY = hubY - robotY;
 
-        boolean tanOverGraph = false;
-        // returns a rough estimate IN RADIANS
-        for (double theta = -Math.PI/2; theta < Math.PI/2; theta += 0.1) {
-            // checks for illegal inputs: tan(pi/2) is undefined
-            if (theta != Math.PI/2 && theta != -Math.PI/2 && tanOverGraph != helperRotationGetValue(distX, distY, theta) < Math.tan(theta)) {
-                desiredAngle = theta;
-                break;
-            }
-        }
-        tanOverGraph = false;
-        for (double theta2 = desiredAngle - 0.1; theta2 < desiredAngle; theta2 += 0.005) {
-            // checks for illegal inputs: tan(pi/2) is undefined
-            if (theta2 != Math.PI/2 && theta2 != -Math.PI/2 && tanOverGraph != helperRotationGetValue(distX, distY, theta2) < Math.tan(theta2)) {
-                desiredAngle = theta2;
-                break;
-            }
-        }
+        desiredAngle = Math.atan(distX/distY);
         
         desiredAngle = Math.toDegrees(desiredAngle);
         if (hubY > robotY) {
@@ -401,10 +385,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             }
         }
 
-        SmartDashboard.putString("Robot Location", robotX + ", " + robotY);
         SmartDashboard.putString("Hub Location", hubX + ", " + hubY);
         SmartDashboard.putNumber("Desired Angle", desiredAngle);
-        SmartDashboard.putNumber("Current facing", getState().RawHeading.getDegrees());
 
         return desiredAngle;
 

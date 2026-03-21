@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Intake;
+
+@Logged
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
@@ -31,7 +33,8 @@ public class Robot extends TimedRobot {
     UsbCamera camera2;
 //
     /* log and replay timestamp and joystick data */
-    @Override   public void robotInit() {
+    @Override   
+    public void robotInit() {
         camera1 = CameraServer.startAutomaticCapture(0);
         camera1.setResolution(320,240);
         camera1.setFPS(15);
@@ -64,6 +67,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
         SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
         SmartDashboard.putNumber("True FW Velocity", launcher.getTrueFlywheelVelocity());
+        SmartDashboard.putNumber("Robot Facing", m_robotContainer.drivetrain.getState().RawHeading.getDegrees());
+        
     }
 
     @Override
