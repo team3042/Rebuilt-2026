@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Intake;
+
+@Logged
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
@@ -58,6 +60,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         
         m_timeAndJoystickReplay.update();
+
         CommandScheduler.getInstance().run(); 
 
         SmartDashboard.putNumber("Intake Encoder Counts", intake.getIntakeMotorPosition());
@@ -116,5 +119,4 @@ public class Robot extends TimedRobot {
 
     @Override
     public void simulationPeriodic() {}
-    
 }

@@ -376,7 +376,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         boolean tanOverGraph = false;
         // returns a rough estimate IN RADIANS
-        for (double theta = -Math.PI/2; theta < Math.PI/2; theta += 0.1) {
+        for (double theta = -Math.PI/2; theta < Math.PI/2; theta += 0.2) {
             // checks for illegal inputs: tan(pi/2) is undefined
             if (theta != Math.PI/2 && theta != -Math.PI/2 && tanOverGraph != helperRotationGetValue(distX, distY, theta) < Math.tan(theta)) {
                 desiredAngle = theta;
@@ -384,7 +384,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             }
         }
         tanOverGraph = false;
-        for (double theta2 = desiredAngle - 0.1; theta2 < desiredAngle; theta2 += 0.005) {
+        for (double theta2 = desiredAngle - 0.1; theta2 < desiredAngle; theta2 += 0.01) {
             // checks for illegal inputs: tan(pi/2) is undefined
             if (theta2 != Math.PI/2 && theta2 != -Math.PI/2 && tanOverGraph != helperRotationGetValue(distX, distY, theta2) < Math.tan(theta2)) {
                 desiredAngle = theta2;
