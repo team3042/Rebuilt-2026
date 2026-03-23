@@ -9,8 +9,9 @@ import com.ctre.phoenix6.HootAutoReplay;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
-import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -52,7 +53,7 @@ public class Robot extends TimedRobot {
         m_robotContainer = new RobotContainer();
         PortForwarder.add(5800, "photonvision.local", 5800);
         DataLogManager.start();
-        Epilogue.bind(this);
+        m_robotContainer.getSwerve().resetPose(new Pose2d(3.6, 4, new Rotation2d()));
 
     }
 
@@ -65,6 +66,10 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
         SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
         SmartDashboard.putNumber("True FW Velocity", launcher.getTrueFlywheelVelocity());
+        Pose2d robotPose = m_robotContainer.getSwerve().getState().Pose;
+        SmartDashboard.putString("Robot Pos", robotPose.getX() + ", " + robotPose.getY());
+        SmartDashboard.putNumber("Robot speed (X)", m_robotContainer.drivetrain.getState().Speeds.vxMetersPerSecond);
+
     }
 
     @Override
@@ -81,6 +86,7 @@ public class Robot extends TimedRobot {
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         if (m_autonomousCommand != null) {
+            System.out.println("Auto selected: " + m_autonomousCommand.getName());
             CommandScheduler.getInstance().schedule(m_autonomousCommand);
         }
     }
