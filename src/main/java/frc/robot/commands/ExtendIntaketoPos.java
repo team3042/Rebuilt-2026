@@ -13,13 +13,15 @@ public class ExtendIntaketoPos extends Command {
   /** Creates a new ExtendIntaketoPos. */
   private final Intake intake;
   private final double power;
+  private final double position;
 
-  public ExtendIntaketoPos(double pow) {
+  public ExtendIntaketoPos(double pow, double pos) {
     // Use addRequirements() here to declare subsystem dependencies.
     intake = Robot.intake;
     addRequirements(intake);
 
     power = pow;
+    position = pos;
   }
 
   // Called when the command is initially scheduled.
@@ -29,17 +31,22 @@ public class ExtendIntaketoPos extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    while(intake.getIntakeMotorPosition() < position) {
+      intake.powerToIntakeOut(power);
+    }
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+    intake.powerToIntakeOut(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return intake.getIntakeMotorPosition() >= position;
   }
 }
