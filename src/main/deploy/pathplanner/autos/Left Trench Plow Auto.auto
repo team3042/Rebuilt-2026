@@ -5,15 +5,21 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "Middle to Shoot"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Move Through Left Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Neutral Plow"
           }
         }
       ]
