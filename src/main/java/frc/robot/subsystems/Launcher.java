@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.wpilibj2.command.Commands.parallel;
+import static edu.wpi.first.wpilibj2.command.Commands.waitSeconds;
 import static edu.wpi.first.wpilibj2.command.Commands.waitUntil;
 
 import com.revrobotics.spark.SparkMax;
@@ -83,8 +84,8 @@ public class Launcher extends SubsystemBase {
                 }),
 
             // Wait until the shooter has reached the setpoint, and then run the feeder
-            waitUntil(m_shooterFeedback::atSetpoint).andThen(() -> powerToFeederAndSpindexer()))
-            .withName("Shoot");
+            waitSeconds(0.5).andThen(() -> powerToFeederAndSpindexer())
+            .withName("Shoot"));
   }
 
   // launcherTime is in seconds, runs the launcher for a specified amount of time "launcherTime"

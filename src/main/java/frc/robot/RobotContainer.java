@@ -7,6 +7,7 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.fasterxml.jackson.databind.util.Named;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.IntakePower;
+import frc.robot.commands.IntakeRunForTime;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -49,7 +51,9 @@ public class RobotContainer {
 
         configureBindings();
 
+        //NamedCommands.registerCommand("directdrive", driveCommand());
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+        NamedCommands.registerCommand("Shoot", Robot.launcher.shootForTimeCommand(Constants.LauncherConstants.DESIRED_RPS, 6));
         // NamedCommands.registerCommand("Aim and Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
         // NamedCommands.registerCommand("Extend Intake", new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
         // NamedCommands.registerCommand("Run Intake", new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
@@ -109,8 +113,21 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
+        Command auto = autoChooser.getSelected();
+        auto.addRequirements(drivetrain);
+        return auto;
+    }
 
-        return autoChooser.getSelected();
+    public Command driveCommand() {
+        return drivetrain.applyRequest(() ->
+                drive.withVelocityX(0.5) // Drive forward with negative Y (forward)
+                    .withVelocityY(0) // Drive left with negative X (left)
+                    .withRotationalRate(0) // Drive counterclockwise with negative X (left)
+            ).withTimeout(2.0);
+    }
+
+    public CommandSwerveDrivetrain getSwerve() {
+        return drivetrain;
     }
     
 }
