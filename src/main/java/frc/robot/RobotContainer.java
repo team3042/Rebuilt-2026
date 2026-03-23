@@ -64,7 +64,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
         NamedCommands.registerCommand("Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
         NamedCommands.registerCommand("Extend Intake", new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
-        NamedCommands.registerCommand("Run Intake", new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
+        NamedCommands.registerCommand("Run Intake", new IntakeRunForTime(Constants.PowerConstants.INTAKE_RUN_POWER,2.0));//TODO: change the 2.0 to a more appropriate time after testing
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
