@@ -47,7 +47,7 @@ public class Intake extends SubsystemBase {
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
 
-    if (insideLimitSwitch.get() && (percentPower >= 0)) 
+    if (insideLimitSwitch.get() && intakePositionMotor.getEncoder().getPosition() < 0 &&  (percentPower >= 0)) 
     {
         intakePositionMotor.set(percentPower);
     } 
@@ -58,6 +58,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void powerToIntakeRun(double percentPower) {
+
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
     intakeRunMotor.set(percentPower);

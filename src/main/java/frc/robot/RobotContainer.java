@@ -7,6 +7,7 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.fasterxml.jackson.databind.util.Named;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.IntakePower;
+import frc.robot.commands.IntakeRunForTime;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -60,9 +62,9 @@ public class RobotContainer {
         configureBindings();
 
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-        // NamedCommands.registerCommand("Aim and Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
-        // NamedCommands.registerCommand("Extend Intake", new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
-        // NamedCommands.registerCommand("Run Intake", new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
+        NamedCommands.registerCommand("Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        NamedCommands.registerCommand("Extend Intake", new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
+        NamedCommands.registerCommand("Run Intake", new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -72,7 +74,7 @@ public class RobotContainer {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
+            // Drivetrain will execute this command periodrically
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(-driver.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-driver.getLeftX() * MaxSpeed) // Drive left with negative X (left)
@@ -130,8 +132,13 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
+        Command auto = autoChooser.getSelected();
+        auto.addRequirements(drivetrain);
+        return auto;
+    }
 
-        return autoChooser.getSelected();
+    public CommandSwerveDrivetrain getSwerve() {
+        return drivetrain;
     }
 
     public void setDesiredAngle() {
