@@ -51,7 +51,6 @@ public class RobotContainer {
 
         configureBindings();
 
-        //NamedCommands.registerCommand("directdrive", driveCommand());
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
         NamedCommands.registerCommand("Shoot", Robot.launcher.shootForTimeCommand(Constants.LauncherConstants.DESIRED_RPS, 6));
         // NamedCommands.registerCommand("Aim and Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
