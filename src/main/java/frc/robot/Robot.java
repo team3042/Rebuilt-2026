@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
+
 import com.ctre.phoenix6.HootAutoReplay;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -11,6 +14,7 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -31,9 +35,12 @@ public class Robot extends TimedRobot {
 
     UsbCamera camera1;
     UsbCamera camera2;
-//
+
+    public PhotonCamera backCamera = new PhotonCamera("back");
+    public PhotonCamera sideCamera = new PhotonCamera("side");
+
     /* log and replay timestamp and joystick data */
-    @Override   public void robotInit() {
+    @Override public void robotInit() {
         camera1 = CameraServer.startAutomaticCapture(0);
         camera1.setResolution(320,240);
         camera1.setFPS(15);
@@ -99,7 +106,19 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        boolean targetVisible = false;
+        double targetYaw = 0.0;
+        double targetRange = 0.0;
+        var results = backCamera.getAllUnreadResults();
+        if (!results.isEmpty()) {
+            var result = results.get(results.size() - 1);
+            for (var target : result.getTargets()) {
+                targetYaw = target.getYaw();
+                targetRange = PhotonUtils.calculateDistanceToTargetMeters(0.55, 1.12, Units.degreesToRadians(0), target.pitch);
+            }
+        }
+    }
 
     @Override
     public void teleopExit() {}
