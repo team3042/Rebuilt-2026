@@ -391,10 +391,4 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return desiredAngle;
 
   }
-
-  private double helperRotationGetValue(double distX, double distY, double theta) {
-    return (distX - Constants.TurretConstants.ROBOT_TO_TURRET_RADIUS*Math.sin(theta))/
-        (distY - Constants.TurretConstants.ROBOT_TO_TURRET_RADIUS*Math.cos(theta));
-  }
-
 }

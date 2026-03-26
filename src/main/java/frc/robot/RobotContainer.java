@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
@@ -52,6 +53,8 @@ public class RobotContainer {
     private final CommandXboxController gunner = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
+    private Trigger rightBumper = driver.rightBumper();
 
     private double rotateToHubAngle = 0;
 
@@ -104,10 +107,10 @@ public class RobotContainer {
 
         // TODO: Allegedly rotates the robot to Hub (needs testing and tweaking perhaps sequential command groud with X stance)
 
-        driver.rightBumper().onTrue(Commands.runOnce(() -> setDesiredAngle(), drivetrain));
-        driver.rightBumper().whileTrue(
+        // driver.rightBumper().onTrue(Commands.runOnce(() -> setDesiredAngle(), drivetrain));
+        rightBumper.whileTrue(
             drivetrain.applyRequest(() -> rotateToAngle
-                .withTargetDirection(Rotation2d.fromDegrees(rotateToHubAngle))
+                .withTargetDirection(Rotation2d.fromDegrees(45))
                 .withVelocityX(0)
                 .withVelocityY(0)
             )
