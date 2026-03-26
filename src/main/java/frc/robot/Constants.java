@@ -52,16 +52,6 @@ public class Constants {
 
     }
 
-    public static class TurretConstants {
-
-        // X is left and right, Y is front to back (in meters)
-        // TODO: measure these values more precisely;
-        public static final double TURRET_X_OFFSET = 0.1778;
-        public static final double TURRET_Y_OFFSET = 0.1397;
-        public static final double ROBOT_TO_TURRET_RADIUS = Math.sqrt(TURRET_X_OFFSET*TURRET_X_OFFSET + TURRET_Y_OFFSET*TURRET_Y_OFFSET);
-
-    }
-
     public static class FieldConstants {
 
         public static final AprilTagFieldLayout FIELD_LAYOUT =
@@ -143,6 +133,5 @@ public class Constants {
                 .get()
                 .toPose2d();
         }
-        public static double DESIRED_RPS = 54;
     }
 }
