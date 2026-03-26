@@ -71,6 +71,9 @@ public class RobotContainer {
 
     }
 
+    public void configureTriggers() {
+        
+    }
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
@@ -108,13 +111,7 @@ public class RobotContainer {
         // TODO: Allegedly rotates the robot to Hub (needs testing and tweaking perhaps sequential command groud with X stance)
 
         // driver.rightBumper().onTrue(Commands.runOnce(() -> setDesiredAngle(), drivetrain));
-        rightBumper.whileTrue(
-            drivetrain.applyRequest(() -> rotateToAngle
-                .withTargetDirection(Rotation2d.fromDegrees(45))
-                .withVelocityX(0)
-                .withVelocityY(0)
-            )
-        );
+        rightBumper.whileTrue(rotateToHub());
 
         //gunner controls
         
@@ -128,6 +125,7 @@ public class RobotContainer {
         gunner.povUp().whileTrue(new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
         gunner.leftBumper().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_RUN_POWER));
         gunner.leftTrigger().whileTrue(new IntakePower(Constants.PowerConstants.INTAKE_REVERSE_RUN_POWER));
+        gunner.povLeft().whileTrue(rotateToHub());
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
@@ -139,5 +137,14 @@ public class RobotContainer {
 
     public void setDesiredAngle() {
         rotateToHubAngle = drivetrain.getAngleToHub();
+    }
+
+    public Command rotateToHub() {
+        System.out.println("I run");
+        return drivetrain.applyRequest(() -> rotateToAngle
+                .withTargetDirection(Rotation2d.fromDegrees(45))
+                .withVelocityX(0)
+                .withVelocityY(0)
+            );
     }
 }

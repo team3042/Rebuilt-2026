@@ -45,7 +45,7 @@ public class Constants {
         public static double KA_VOLTS = 0.01;
         // PID gains
         public static double kP = 0.001;
-        public static double KSHOOTER_TOLERANCE_RPS = 54;
+        public static double KSHOOTER_TOLERANCE_RPS = 100;
         public static double kI = 0;
         public static double kD = 0;
         public static double DESIRED_RPS = 54;

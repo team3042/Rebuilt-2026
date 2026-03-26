@@ -86,7 +86,7 @@ public class Launcher extends SubsystemBase {
             waitUntil(m_shooterFeedback::atSetpoint).andThen(() -> powerToFeederAndSpindexer()))
             .withName("Shoot");
   }
-
+ 
   // launcherTime is in seconds, runs the launcher for a specified amount of time "launcherTime"
   public Command shootForTimeCommand(double setpointRotationsPerSecond, double launcherTime) {
     return shootCommand(setpointRotationsPerSecond).withTimeout(launcherTime);
