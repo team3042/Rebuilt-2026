@@ -66,9 +66,14 @@ public class Launcher extends SubsystemBase {
   //           waitUntil(m_shooterFeedback::atSetpoint).andThen(() -> powerToFeederAndSpindexer()))
   //           .withName("Shoot");
   // }
-  public Command shootCommand(CommandSwerveDrivetrain drivetrain, double setpointRotationsPerSecond) {
+  public Command shootCommand(CommandSwerveDrivetrain drivetrain) {
 
-    //pose of hub:
+    //distance to hub
+    double x_distance = Constants.FieldConstants.Hub.blueTopCenterPoint.getX() - drivetrain.getRotation3d().getX();
+    double y_distance = Constants.FieldConstants.Hub.blueTopCenterPoint.getY() - drivetrain.getRotation3d().getY();
+    double distance = Math.sqrt(Math.pow(x_distance, 2) + Math.pow(y_distance,2));
+
+    double setpointRotationsPerSecond = Constants.LauncherConstants.DESIRED_RPS + 0.1*distance; //TODO: find right value (replace .1) for this equation
 
     double power = m_shooterFeedforward.calculate(setpointRotationsPerSecond)
                           + m_shooterFeedback.calculate(
@@ -90,9 +95,9 @@ public class Launcher extends SubsystemBase {
   }
 
   // launcherTime is in seconds, runs the launcher for a specified amount of time "launcherTime"
-  // public Command shootForTimeCommand(double setpointRotationsPerSecond, double launcherTime) {
-  //   return shootCommand(setpointRotationsPerSecond).withTimeout(launcherTime);
-  // }
+  public Command shootForTimeCommand(CommandSwerveDrivetrain drivetrain, double launcherTime) {
+    return shootCommand(drivetrain).withTimeout(launcherTime);
+  }
 
   public Command shootCommand2() {
     return parallel(

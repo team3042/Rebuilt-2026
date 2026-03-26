@@ -94,7 +94,7 @@ public class RobotContainer {
 
         //gunner controls
         
-        gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(drivetrain));
         //gunner.rightBumper().whileTrue(Robot.launcher.shootCommand2());
 
         // gunner.rightBumper().whileTrue(new RunFeeder());
