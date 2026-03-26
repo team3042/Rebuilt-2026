@@ -1,5 +1,10 @@
 package frc.robot;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
+
 public class Constants {
 
    // put all motor IDs in this class
@@ -42,6 +47,59 @@ public class Constants {
         public static double KSHOOTER_TOLERANCE_RPS = 54;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 54;
+        public static double DESIRED_RPS_TRENCH = 56;
+        public static double DESIRED_RPS = 60; //TODO: needes to be edited to be implemtend in code
+
+    }
+
+    public static class TurretConstants {
+
+        // X is left and right, Y is front to back (in meters)
+        // TODO: measure these values more precisely;
+        public static final double TURRET_X_OFFSET = 0.1778;
+        public static final double TURRET_Y_OFFSET = 0.1397;
+        public static final double ROBOT_TO_TURRET_RADIUS = Math.sqrt(TURRET_X_OFFSET*TURRET_X_OFFSET + TURRET_Y_OFFSET*TURRET_Y_OFFSET);
+
+    }
+
+    public static class IntakeConstants {
+
+        public static final double INTAKE_OUT_POSITION = -30; //TODO: find the actual position for the intake to be fully extended
+
+    }
+
+    public static class FieldConstants {
+
+        public static final AprilTagFieldLayout FIELD_LAYOUT =
+            AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
+
+        public static final double FIELD_LENGTH = FIELD_LAYOUT.getFieldLength();
+        public static final double FIELD_WIDTH = FIELD_LAYOUT.getFieldWidth();
+
+        public static class Hub {
+
+            // Dimensions
+            public static final double WIDTH =
+                edu.wpi.first.math.util.Units.inchesToMeters(47.0);
+            public static final double HEIGHT =
+                edu.wpi.first.math.util.Units.inchesToMeters(72.0); // includes the catcher at the top
+            public static final double INNER_WIDTH =
+                edu.wpi.first.math.util.Units.inchesToMeters(41.7);
+            public static final double INNER_HEIGHT =
+                edu.wpi.first.math.util.Units.inchesToMeters(56.5);
+
+            // Relevant reference points on alliance side
+            public static final Translation2d blueTopCenterPoint = new Translation3d(
+                FIELD_LAYOUT.getTagPose(26).get().getX() + WIDTH / 2.0,
+                FIELD_WIDTH / 2.0,
+                HEIGHT
+            ).toTranslation2d();
+            // Relevant reference points on the opposite side
+            public static final Translation2d redTopCenterPoint = new Translation3d(
+                FIELD_LAYOUT.getTagPose(4).get().getX() + WIDTH / 2.0,
+                FIELD_WIDTH / 2.0,
+                HEIGHT
+            ).toTranslation2d();
+        }
     }
 }
