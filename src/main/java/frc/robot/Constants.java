@@ -48,7 +48,7 @@ public class Constants {
         public static double KSHOOTER_TOLERANCE_RPS = 54;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 54;
+        public static double DESIRED_RPS = 65;
 
     }
 
@@ -64,7 +64,7 @@ public class Constants {
 
     public static class IntakeConstants {
 
-        public static final double INTAKE_OUT_POSITION = -30; //TODO: find the actual position for the intake to be fully extended
+        public static final double INTAKE_OUT_POSITION = -32; //TODO: find the actual position for the intake to be fully extended
 
     }
 

@@ -75,6 +75,7 @@ public class Launcher extends SubsystemBase {
 
     SmartDashboard.putNumber("Flywheel Motor Power", power);
     SmartDashboard.putNumber("Flywheel Set Point RPS", setpointRotationsPerSecond);
+    System.out.println("We are in the wrong launcher command");
     
     return parallel(
             // Run the shooter flywheel at the desired setpoint using feedforward and feedback
@@ -84,13 +85,38 @@ public class Launcher extends SubsystemBase {
                 }),
 
             // Wait until the shooter has reached the setpoint, and then run the feeder
-            waitSeconds(0.5).andThen(() -> powerToFeederAndSpindexer())
-            .withName("Shoot"));
+            waitSeconds(1.0).andThen(() -> powerToFeederAndSpindexer())
+            .withName("ShootFromLauncher"));
   }
 
-  // launcherTime is in seconds, runs the launcher for a specified amount of time "launcherTime"
-  public Command shootForTimeCommand(double setpointRotationsPerSecond, double launcherTime) {
-    return shootCommand(setpointRotationsPerSecond).withTimeout(launcherTime);
+  // // launcherTime is in seconds, runs the launcher for a specified amount of time "launcherTime"
+  // public Command shootForTimeCommand(double setpointRotationsPerSecond, double launcherTime) {
+  //   return shootCommand(setpointRotationsPerSecond).withTimeout(launcherTime);
+  // }
+
+  // launcherTime is in seconds, runs the launcher for the specified amount of time
+  public Command shootForTimeCommand2(double setpointRotationsPerSecond, double launcherTime) {
+
+    double power = m_shooterFeedforward.calculate(setpointRotationsPerSecond)
+                          + m_shooterFeedback.calculate(
+                              getFlywheelVelocity(), setpointRotationsPerSecond);
+
+    SmartDashboard.putNumber("Flywheel Motor Power", power);
+    SmartDashboard.putNumber("Flywheel Set Point RPS", setpointRotationsPerSecond);
+    SmartDashboard.putNumber("launcherTime", launcherTime);
+    System.out.println("Timeout");
+    System.out.println(launcherTime);
+    
+    return parallel(
+            // Run the shooter flywheel at the desired setpoint using feedforward and feedback
+            run(
+                () -> {
+                  flywheelMotor.set(power);
+                }).withTimeout(launcherTime),
+
+            // Wait until the shooter has reached the setpoint, and then run the feeder
+            waitSeconds(1.0).andThen(() -> powerToFeederAndSpindexer()).withTimeout(launcherTime).andThen(() -> {this.stopLauncherMotors();}))
+            .withName("ShootFromLauncher");
   }
 
   public Command shootCommand2() {

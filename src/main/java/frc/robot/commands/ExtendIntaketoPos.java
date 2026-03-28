@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
@@ -31,7 +32,9 @@ public class ExtendIntaketoPos extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while(intake.getIntakeMotorPosition() < position) {
+    while(intake.getIntakeMotorPosition() > position) {
+      SmartDashboard.putNumber("Target intake pos", position);
+      SmartDashboard.putNumber("Actual intake pos", intake.getIntakeMotorPosition());
       intake.powerToIntakeOut(power);
     }
     
@@ -47,6 +50,6 @@ public class ExtendIntaketoPos extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.getIntakeMotorPosition() >= position;
+    return intake.getIntakeMotorPosition() <= position + 1;
   }
 }
