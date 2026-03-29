@@ -64,7 +64,7 @@ public class Constants {
 
     public static class IntakeConstants {
 
-        public static final double INTAKE_OUT_POSITION = -34; //TODO: find the actual position for the intake to be fully extended
+        public static final double INTAKE_OUT_POSITION = -40; //TODO: find the actual position for the intake to be fully extended
 
     }
 
