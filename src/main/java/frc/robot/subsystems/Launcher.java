@@ -73,7 +73,7 @@ public class Launcher extends SubsystemBase {
     double y_distance = Constants.FieldConstants.Hub.blueTopCenterPoint.getY() - drivetrain.getRotation3d().getY();
     double distance = Math.sqrt(Math.pow(x_distance, 2) + Math.pow(y_distance,2));
 
-    double setpointRotationsPerSecond = Constants.LauncherConstants.DESIRED_RPS + 0.1*distance; //TODO: find right value (replace .1) for this equation
+    double setpointRotationsPerSecond = Constants.LauncherConstants.DESIRED_RPS + 2.3*distance; //TODO: find right value (replace .1) for this equation
 
     double power = m_shooterFeedforward.calculate(setpointRotationsPerSecond)
                           + m_shooterFeedback.calculate(
