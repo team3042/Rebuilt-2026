@@ -7,7 +7,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.fasterxml.jackson.databind.util.Named;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -26,6 +25,8 @@ import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.IntakePower;
 import frc.robot.commands.IntakeRunForTime;
+import frc.robot.commands.LauncherRunForTime;
+import frc.robot.commands.RetractInake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -62,10 +63,12 @@ public class RobotContainer {
 
         configureBindings();
 
+        NamedCommands.registerCommand("Stop Launcher", Robot.launcher.stopLauncherCommand());
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-        NamedCommands.registerCommand("Shoot", Robot.launcher.shootForTimeCommand2(Constants.LauncherConstants.DESIRED_RPS, 4.0));
+        NamedCommands.registerCommand("Shoot", new LauncherRunForTime(Constants.LauncherConstants.DESIRED_RPS, 5.0));
         NamedCommands.registerCommand("Extend Intake", new ExtendIntaketoPos(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER, Constants.IntakeConstants.INTAKE_OUT_POSITION));
-        NamedCommands.registerCommand("Run Intake", new IntakeRunForTime(Constants.PowerConstants.INTAKE_RUN_POWER, 4.0));//TODO: change the 2.0 to a more appropriate time after testing
+        NamedCommands.registerCommand("Run Intake", new IntakeRunForTime(Constants.PowerConstants.INTAKE_RUN_POWER, 4.0));
+        NamedCommands.registerCommand("Retract Intake", new RetractInake(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 

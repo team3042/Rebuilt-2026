@@ -30,8 +30,8 @@ public class Constants {
         
         public static final double INTAKE_RUN_POWER = -0.8;
         public static final double INTAKE_REVERSE_RUN_POWER = 0.5;
-        public static final double INTAKE_POSITION_IN_POWER = 0.15;
-        public static final double INTAKE_POSITION_OUT_POWER = -0.15;
+        public static final double INTAKE_POSITION_IN_POWER = 0.45;
+        public static final double INTAKE_POSITION_OUT_POWER = -0.45;
 
         public static final double FEEDER_RUN_TO_LAUNCHER_POWER = 0.5;
         public static final double FEEDER_RUN_AWAY_FROM_LAUNCHER_POWER = -0.5;
@@ -45,10 +45,10 @@ public class Constants {
         public static double KA_VOLTS = 0.01;
         // PID gains
         public static double kP = 0.001;
-        public static double KSHOOTER_TOLERANCE_RPS = 54;
+        public static double KSHOOTER_TOLERANCE_RPS = 5;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 65;
+        public static double DESIRED_RPS = 62;
 
     }
 
@@ -64,7 +64,7 @@ public class Constants {
 
     public static class IntakeConstants {
 
-        public static final double INTAKE_OUT_POSITION = -32; //TODO: find the actual position for the intake to be fully extended
+        public static final double INTAKE_OUT_POSITION = -34; //TODO: find the actual position for the intake to be fully extended
 
     }
 

@@ -52,6 +52,12 @@
           "data": {
             "name": "Shoot"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Retract Intake"
+          }
         }
       ]
     }

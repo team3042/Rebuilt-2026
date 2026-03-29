@@ -68,6 +68,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Intake Inside Limit Switch", intake.insideLimitSwitch.get());
         SmartDashboard.putNumber("Flywheel Speed", launcher.getFlywheelVelocity());
         SmartDashboard.putNumber("True FW Velocity", launcher.getTrueFlywheelVelocity());
+        SmartDashboard.putNumber("Spindexer Velocity", launcher.getSpindexerMotorVelocity());
+        SmartDashboard.putNumber("Feeder Velocity", launcher.getFeederMotorVelocity());
         Pose2d robotPose = m_robotContainer.getSwerve().getState().Pose;
         SmartDashboard.putString("Robot Pos", robotPose.getX() + ", " + robotPose.getY());
         SmartDashboard.putNumber("Robot speed (X)", m_robotContainer.drivetrain.getState().Speeds.vxMetersPerSecond);
