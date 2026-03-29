@@ -16,11 +16,13 @@ import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import org.json.simple.parser.ParseException;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,8 +32,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.config.RobotConfig;
-import com.ctre.phoenix6.swerve.SwerveModule;
-
+import frc.robot.Constants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 /**
@@ -344,4 +345,74 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
+
+    public Pose2d getPose() {
+        return getState().Pose;
+    }
+    public Rotation2d getHeading() {
+        return getState().RawHeading;
+    }
+
+    public double getAngleToHub() {
+        
+        Pose2d robotPose = getPose();
+        Translation2d hubCenter = null;
+        double desiredAngle = 0;
+
+        if (DriverStation.getAlliance().get().equals(Alliance.Red)) {
+            hubCenter = Constants.FieldConstants.Hub.redTopCenterPoint.toTranslation2d();
+        } else if (DriverStation.getAlliance().get().equals(Alliance.Blue)) {
+            hubCenter = Constants.FieldConstants.Hub.blueTopCenterPoint.toTranslation2d();
+        }
+
+        double robotX = robotPose.getX();
+        double robotY = robotPose.getY();
+
+        double hubX = hubCenter.getX();
+        double hubY = hubCenter.getY();
+
+        double distX = hubX - robotX;
+        double distY = hubY - robotY;
+
+        boolean tanOverGraph = false;
+        // returns a rough estimate IN RADIANS
+        for (double theta = -Math.PI/2; theta < Math.PI/2; theta += 0.2) {
+            // checks for illegal inputs: tan(pi/2) is undefined
+            if (theta != Math.PI/2 && theta != -Math.PI/2 && tanOverGraph != helperRotationGetValue(distX, distY, theta) < Math.tan(theta)) {
+                desiredAngle = theta;
+                break;
+            }
+        }
+        tanOverGraph = false;
+        for (double theta2 = desiredAngle - 0.1; theta2 < desiredAngle; theta2 += 0.01) {
+            // checks for illegal inputs: tan(pi/2) is undefined
+            if (theta2 != Math.PI/2 && theta2 != -Math.PI/2 && tanOverGraph != helperRotationGetValue(distX, distY, theta2) < Math.tan(theta2)) {
+                desiredAngle = theta2;
+                break;
+            }
+        }
+        
+        desiredAngle = Math.toDegrees(desiredAngle);
+        if (hubY > robotY) {
+            if (hubX <= robotX) {
+                desiredAngle += 180;
+            } else {
+                desiredAngle -= 180;
+            }
+        }
+
+        SmartDashboard.putString("Robot Location", robotX + ", " + robotY);
+        SmartDashboard.putString("Hub Location", hubX + ", " + hubY);
+        SmartDashboard.putNumber("Desired Angle", desiredAngle);
+        SmartDashboard.putNumber("Current facing", getState().RawHeading.getDegrees());
+
+        return desiredAngle;
+
+  }
+
+  private double helperRotationGetValue(double distX, double distY, double theta) {
+    return (distX - Constants.TurretConstants.ROBOT_TO_TURRET_RADIUS*Math.sin(theta))/
+        (distY - Constants.TurretConstants.ROBOT_TO_TURRET_RADIUS*Math.cos(theta));
+  }
+
 }

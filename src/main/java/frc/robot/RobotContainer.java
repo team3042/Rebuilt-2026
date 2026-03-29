@@ -7,8 +7,8 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.fasterxml.jackson.databind.util.Named;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -20,10 +20,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.ExtendIntaketoPos;
 import frc.robot.commands.IntakeIn;
 import frc.robot.commands.IntakeOut;
 import frc.robot.commands.IntakePower;
 import frc.robot.commands.IntakeRunForTime;
+import frc.robot.commands.LauncherRunForTime;
+import frc.robot.commands.RetractInake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -35,8 +38,15 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.1)
+            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+    private final FieldCentricFacingAngle rotateToAngle = new FieldCentricFacingAngle()
+            .withDeadband(MaxSpeed * 0.1)
+            .withRotationalDeadband(MaxAngularRate * 0.1)
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
@@ -47,14 +57,18 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
+    private double rotateToHubAngle = 0;
+
     public RobotContainer() {
 
         configureBindings();
 
+        NamedCommands.registerCommand("Stop Launcher", Robot.launcher.stopLauncherCommand());
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-        NamedCommands.registerCommand("Shoot", Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
-        NamedCommands.registerCommand("Extend Intake", new IntakeOut(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER));
-        NamedCommands.registerCommand("Run Intake", new IntakeIn(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
+        NamedCommands.registerCommand("Shoot", new LauncherRunForTime(Constants.LauncherConstants.DESIRED_RPS, 5.0));
+        NamedCommands.registerCommand("Extend Intake", new ExtendIntaketoPos(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER, Constants.IntakeConstants.INTAKE_OUT_POSITION));
+        NamedCommands.registerCommand("Run Intake", new IntakeRunForTime(Constants.PowerConstants.INTAKE_RUN_POWER, 4.0));
+        NamedCommands.registerCommand("Retract Intake", new RetractInake(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -94,6 +108,17 @@ public class RobotContainer {
         // Reset the field-centric heading on left bumper press.
         driver.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
+        // TODO: Allegedly rotates the robot to Hub (needs testing and tweaking perhaps sequential command groud with X stance)
+
+        driver.rightBumper().onTrue(Commands.runOnce(() -> setDesiredAngle(), drivetrain));
+        driver.rightBumper().whileTrue(
+            drivetrain.applyRequest(() -> rotateToAngle
+                .withTargetDirection(Rotation2d.fromDegrees(rotateToHubAngle))
+                .withVelocityX(0)
+                .withVelocityY(0)
+            )
+        );
+
         //gunner controls
         
         gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
@@ -119,5 +144,8 @@ public class RobotContainer {
     public CommandSwerveDrivetrain getSwerve() {
         return drivetrain;
     }
-    
+
+    public void setDesiredAngle() {
+        rotateToHubAngle = drivetrain.getAngleToHub();
+    }
 }

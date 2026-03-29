@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
   public void powerToIntakeOut(double percentPower){    
     percentPower = Math.min(percentPower, 1);
     percentPower = Math.max(percentPower, -1);
-    if ((percentPower <= 0) && (intakePositionMotor.getEncoder().getPosition() > -30)) 
+    if ((percentPower <= 0) && (intakePositionMotor.getEncoder().getPosition() > Constants.IntakeConstants.INTAKE_OUT_POSITION)) 
     {
         intakePositionMotor.set(percentPower);
     }
