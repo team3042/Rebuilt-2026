@@ -13,13 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Move Through Left Trench"
+            "pathName": "leftMoveThroughTrench"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Neutral Mess"
+            "pathName": "leftNeutralMess"
           }
         }
       ]

@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right to Neutral"
+            "pathName": "rightToNeutral"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Across Neutral"
+            "pathName": "rightAcrossNeutral"
           }
         }
       ]

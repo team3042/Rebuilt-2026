@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left to Depot"
+            "pathName": "leftToDepot"
           }
         },
         {
@@ -35,7 +35,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Move To Pick Up Depot"
+                  "pathName": "moveToPickUpDepot"
                 }
               }
             ]
@@ -44,7 +44,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Leave Depot to Shoot"
+            "pathName": "LeaveDepotToShoot"
           }
         },
         {

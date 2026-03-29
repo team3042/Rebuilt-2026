@@ -13,13 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right to Neutral"
+            "pathName": "rightToNeutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Neutral Disruption"
+            "pathName": "neutralDisruption"
           }
         }
       ]
