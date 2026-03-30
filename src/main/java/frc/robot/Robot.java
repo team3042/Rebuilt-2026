@@ -52,7 +52,10 @@ public class Robot extends TimedRobot {
         camera2 = CameraServer.startAutomaticCapture(1);
         camera2.setResolution(320,240);
         camera2.setFPS(15);
-        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen); }
+        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+
+        vision = new Vision(m_robotContainer.drivetrain::addVisionMeasurement);
+     }
 
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
         .withTimestampReplay()
