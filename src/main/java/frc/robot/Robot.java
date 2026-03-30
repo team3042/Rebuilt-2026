@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import com.ctre.phoenix6.HootAutoReplay;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -30,8 +32,13 @@ public class Robot extends TimedRobot {
     public static Launcher launcher = new Launcher();
     public static Intake intake = new Intake();
 
+    // This is in case we want to use the target for aiming at a hub target using the back camera.
+    public static PhotonTrackedTarget bestBackTarget;
+
     UsbCamera camera1;
     UsbCamera camera2;
+
+    private Vision vision;
 //
     /* log and replay timestamp and joystick data */
     @Override   public void robotInit() {
@@ -43,7 +50,10 @@ public class Robot extends TimedRobot {
         camera2 = CameraServer.startAutomaticCapture(1);
         camera2.setResolution(320,240);
         camera2.setFPS(15);
-        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);    }
+        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+
+        vision = new Vision(m_robotContainer.drivetrain::addVisionMeasurement);
+     }
 
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
         .withTimestampReplay()
@@ -70,6 +80,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putString("Robot Pos", robotPose.getX() + ", " + robotPose.getY());
         SmartDashboard.putNumber("Robot speed (X)", m_robotContainer.drivetrain.getState().Speeds.vxMetersPerSecond);
 
+        vision.periodic();
     }
 
     @Override
