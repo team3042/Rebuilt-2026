@@ -42,6 +42,8 @@ public class Robot extends TimedRobot {
 //
     /* log and replay timestamp and joystick data */
     @Override   public void robotInit() {
+        vision = new Vision(m_robotContainer.drivetrain::addVisionMeasurement);
+
         camera1 = CameraServer.startAutomaticCapture(0);
         camera1.setResolution(320,240);
         camera1.setFPS(15);
@@ -50,10 +52,7 @@ public class Robot extends TimedRobot {
         camera2 = CameraServer.startAutomaticCapture(1);
         camera2.setResolution(320,240);
         camera2.setFPS(15);
-        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-
-        vision = new Vision(m_robotContainer.drivetrain::addVisionMeasurement);
-     }
+        camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen); }
 
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
         .withTimestampReplay()
