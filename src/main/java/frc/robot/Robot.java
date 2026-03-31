@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import com.ctre.phoenix6.HootAutoReplay;
@@ -14,6 +15,7 @@ import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -27,19 +29,20 @@ import frc.robot.subsystems.Intake;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
-    private final RobotContainer m_robotContainer;
+    public final RobotContainer m_robotContainer;
 
     public static Launcher launcher = new Launcher();
     public static Intake intake = new Intake();
 
     // This is in case we want to use the target for aiming at a hub target using the back camera.
     public static PhotonTrackedTarget bestBackTarget;
+    public static double distanceToTarget = 0;
 
     UsbCamera camera1;
     UsbCamera camera2;
 
     private Vision vision;
-//
+
     /* log and replay timestamp and joystick data */
     @Override   public void robotInit() {
         vision = new Vision(m_robotContainer.drivetrain::addVisionMeasurement);
@@ -84,6 +87,10 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Robot speed (X)", m_robotContainer.drivetrain.getState().Speeds.vxMetersPerSecond);
 
         vision.periodic();
+
+        if (bestBackTarget != null) {
+            distanceToTarget = PhotonUtils.calculateDistanceToTargetMeters(0.4, 1.124, Units.degreesToRadians(0), Units.degreesToRadians(bestBackTarget.getPitch()));
+        }
     }
 
     @Override
