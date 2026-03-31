@@ -19,28 +19,6 @@ import edu.wpi.first.math.geometry.Translation3d;
 
 public class Constants {
 
-    public static class Vision {
-        // TO-DO: Set the correct height ("z") for both cameras in the Translation3d on lines 21 and 26 
-        public static final String CAMERA_NAME_1 = "Back";
-        // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
-        public static final Transform3d kRobotToCam_1 =  // x=10.13", y=11.5", guessing z at 18
-                new Transform3d(new Translation3d(0.257, 0.292, 0.457), new Rotation3d(0, 0, Units.degreesToRadians(180)));
-
-        public static final String CAMERA_NAME_2 = "Side";
-        // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
-        public static final Transform3d kRobotToCam_2 = // x=11.5", y=10.13", guessing z at 16.5
-                new Transform3d(new Translation3d(0.292, 0.257, 0.419), new Rotation3d(0, 0, Units.degreesToRadians(90)));
-
-        // The layout of the AprilTags on the field
-        public static final AprilTagFieldLayout kTagLayout =
-                AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-
-        // The standard deviations of our vision estimated poses, which affect correction rate
-        // (Fake values. Experiment and determine estimation noise on an actual robot.)
-        public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
-        public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
-    }
-
     // put all motor IDs in this class
     public static class MotorIDs {
 
@@ -185,4 +163,27 @@ public class Constants {
         }
         public static double DESIRED_RPS = 54;
     }
+
+    public static class Vision {
+        // TO-DO: Set the correct height ("z") for both cameras in the Translation3d on lines 21 and 26 
+        public static final String CAMERA_NAME_1 = "Back";
+        // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+        public static final Transform3d kRobotToCam_1 =  // x=10.13", y=11.5", guessing z at 18
+                new Transform3d(new Translation3d(0.257, 0.292, 0.457), new Rotation3d(0, 0, Units.degreesToRadians(180)));
+
+        public static final String CAMERA_NAME_2 = "Side";
+        // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+        public static final Transform3d kRobotToCam_2 = // x=11.5", y=10.13", guessing z at 16.5
+                new Transform3d(new Translation3d(0.292, 0.257, 0.419), new Rotation3d(0, 0, Units.degreesToRadians(90)));
+
+        // The layout of the AprilTags on the field
+        public static final AprilTagFieldLayout kTagLayout =
+                AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+
+        // The standard deviations of our vision estimated poses, which affect correction rate
+        // (Fake values. Experiment and determine estimation noise on an actual robot.)
+        public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
+        public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
+    }
+
 }
