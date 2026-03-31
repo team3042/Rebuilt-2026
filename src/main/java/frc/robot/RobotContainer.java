@@ -66,6 +66,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Stop Launcher", Robot.launcher.stopLauncherCommand());
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
         NamedCommands.registerCommand("Shoot", new LauncherRunForTime(Constants.LauncherConstants.DESIRED_RPS, 5.0));
+        NamedCommands.registerCommand("Shoot longer", new LauncherRunForTime(Constants.LauncherConstants.DESIRED_RPS, 7.0));
         NamedCommands.registerCommand("Extend Intake", new ExtendIntaketoPos(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER, Constants.IntakeConstants.INTAKE_OUT_POSITION));
         NamedCommands.registerCommand("Run Intake", new IntakeRunForTime(Constants.PowerConstants.INTAKE_RUN_POWER, 4.0));
         NamedCommands.registerCommand("Retract Intake", new RetractInake(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
