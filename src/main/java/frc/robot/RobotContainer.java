@@ -6,6 +6,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Set;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
@@ -125,6 +127,10 @@ public class RobotContainer {
         //gunner controls
         
         gunner.rightBumper().whileTrue(Robot.launcher.shootCommand(Constants.LauncherConstants.DESIRED_RPS));
+        Command c = Commands.defer(() -> Robot.launcher.shootCommand(
+            Robot.distanceToTarget > 10 ?
+                Constants.LauncherConstants.DESIRED_RPS : 
+                Constants.LauncherConstants.DESIRED_RPS - 2), Set.of(Robot.launcher));
         //gunner.rightBumper().whileTrue(Robot.launcher.shootCommand2());
 
         // gunner.rightBumper().whileTrue(new RunFeeder());
