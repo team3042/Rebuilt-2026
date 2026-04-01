@@ -29,27 +29,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Run Intake"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "moveToPickUpDepot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Intake"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "getDepotFuel"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "depotToMiddleShoot"
+            "pathName": "LeaveDepotToShoot"
           }
         },
         {

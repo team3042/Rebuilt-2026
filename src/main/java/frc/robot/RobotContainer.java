@@ -12,6 +12,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,6 +31,7 @@ import frc.robot.commands.RetractInake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
+@Logged
 public class RobotContainer {
 
     private SendableChooser<Command> autoChooser;
@@ -65,7 +67,8 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("Stop Launcher", Robot.launcher.stopLauncherCommand());
         NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-        NamedCommands.registerCommand("Shoot", new LauncherRunForTime(Constants.LauncherConstants.DESIRED_RPS, 5.0));
+        NamedCommands.registerCommand("Shoot", new LauncherRunForTime(Constants.LauncherConstants.DESIRED_AUTON_RPS, 5.0));
+        NamedCommands.registerCommand("Shoot longer", new LauncherRunForTime(Constants.LauncherConstants.DESIRED_AUTON_RPS, 7.0));
         NamedCommands.registerCommand("Extend Intake", new ExtendIntaketoPos(Constants.PowerConstants.INTAKE_POSITION_OUT_POWER, Constants.IntakeConstants.INTAKE_OUT_POSITION));
         NamedCommands.registerCommand("Run Intake", new IntakeRunForTime(Constants.PowerConstants.INTAKE_RUN_POWER, 4.0));
         NamedCommands.registerCommand("Retract Intake", new RetractInake(Constants.PowerConstants.INTAKE_POSITION_IN_POWER));
