@@ -5,6 +5,7 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
+import java.util.Set;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -139,12 +141,13 @@ public class RobotContainer {
         rotateToHubAngle = drivetrain.getAngleToHub();
     }
 
-    public Command rotateToHub() {
-        System.out.println("I run");
-        return drivetrain.applyRequest(() -> rotateToAngle
-                .withTargetDirection(Rotation2d.fromDegrees(45))
-                .withVelocityX(0)
-                .withVelocityY(0)
-            );
-    }
+    public DeferredCommand rotateToHub() {
+    System.out.println("I run");
+    return new DeferredCommand(
+        () -> drivetrain.applyRequest(() -> rotateToAngle
+            .withTargetDirection(Rotation2d.fromDegrees(45))
+            .withVelocityX(0)
+            .withVelocityY(0)),
+        Set.of(drivetrain)
+    );
 }
