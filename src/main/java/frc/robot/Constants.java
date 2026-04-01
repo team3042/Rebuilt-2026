@@ -61,7 +61,10 @@ public class Constants {
         public static double KSHOOTER_TOLERANCE_RPS = 2;
         public static double kI = 0;
         public static double kD = 0;
-        public static double DESIRED_RPS = 58;
+        public static double DESIRED_RPS = 59;
+        public static double DESIRED_RPS_CLOSE = 58;
+        public static double DESIRED_RPS_MID = 60;
+        public static double DESIRED_RPS_FAR = 65;
         public static double DESIRED_AUTON_RPS = 60;
 
     }
@@ -163,7 +166,6 @@ public class Constants {
                 .get()
                 .toPose2d();
         }
-        public static double DESIRED_RPS = 54;
     }
 
 

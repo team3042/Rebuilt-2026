@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
 
     // This is in case we want to use the target for aiming at a hub target using the back camera.
     public static PhotonTrackedTarget bestBackTarget;
+    public static int latestFiducialId = 0;
     public static double distanceToTarget = 0;
 
     UsbCamera camera1;
@@ -90,7 +91,10 @@ public class Robot extends TimedRobot {
 
         if (bestBackTarget != null) {
             distanceToTarget = PhotonUtils.calculateDistanceToTargetMeters(0.4, 1.124, Units.degreesToRadians(0), Units.degreesToRadians(bestBackTarget.getPitch()));
+            latestFiducialId = bestBackTarget.fiducialId;
         }
+        SmartDashboard.putNumber("AprilTag #", latestFiducialId);
+        SmartDashboard.putNumber("Distance to target", distanceToTarget);
     }
 
     @Override
