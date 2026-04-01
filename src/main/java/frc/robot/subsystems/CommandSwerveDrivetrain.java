@@ -352,7 +352,20 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Rotation2d getHeading() {
         return getState().RawHeading;
     }
+    public double getAngleToHub(double distanceFromHub, double yaw) {
+        double desiredAngle = 0;
 
+        double distX = distanceFromHub * Math.sin(Math.toRadians(yaw));
+        double distY = distanceFromHub * Math.cos(Math.toRadians(yaw));
+
+        desiredAngle = Math.toDegrees(Math.atan2(distX, distY));
+        
+        desiredAngle = Math.min(desiredAngle, 360 - desiredAngle);
+        SmartDashboard.putNumber("Desired Angle", desiredAngle);
+
+        return desiredAngle;
+
+   }
     public double getAngleToHub() {
         
         Pose2d robotPose = getPose();
