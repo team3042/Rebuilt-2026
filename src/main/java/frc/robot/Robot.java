@@ -93,6 +93,9 @@ public class Robot extends TimedRobot {
             distanceToTarget = PhotonUtils.calculateDistanceToTargetMeters(0.4, 1.124, Units.degreesToRadians(0), Units.degreesToRadians(bestBackTarget.getPitch()));
             latestFiducialId = bestBackTarget.fiducialId;
         }
+        else {
+            distanceToTarget = 4.0;     // If we don't have a target, default to middle-distance shooting.
+        }
         SmartDashboard.putNumber("AprilTag #", latestFiducialId);
         SmartDashboard.putNumber("Distance to target", distanceToTarget);
     }
