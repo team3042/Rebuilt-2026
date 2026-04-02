@@ -131,10 +131,14 @@ public class RobotContainer {
             Robot.distanceToTarget > 4.5 ?      // If more than about 15 feet, fastest flywheel
                 Constants.LauncherConstants.DESIRED_RPS_FAR :
                 Constants.LauncherConstants.DESIRED_RPS_MID), Set.of(Robot.launcher)));
-        gunner.b().whileTrue(Commands.defer(() -> Robot.launcher.shootCommand(
-            Robot.distanceToTarget < 3 ?      // If more than about 15 feet, fastest flywheel
-                Constants.LauncherConstants.DESIRED_RPS_CLOSE :
-                Constants.LauncherConstants.DESIRED_RPS_MID), Set.of(Robot.launcher)));
+        gunner.b().whileTrue(
+            Commands.defer(() -> Robot.launcher.shootCommand(
+                Robot.distanceToTarget > 4.5 ?
+                    Constants.LauncherConstants.DESIRED_RPS_FAR :
+                Robot.distanceToTarget > 3.0 ?
+                    Constants.LauncherConstants.DESIRED_RPS_MID : Constants.LauncherConstants.DESIRED_RPS_CLOSE),
+                Set.of(Robot.launcher))
+        );
 
         // gunner.rightBumper().whileTrue(new RunFeeder());
         gunner.y().whileTrue(Robot.launcher.run(Robot.launcher::powerToFeederAndSpindexer));
